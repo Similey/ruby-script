@@ -1,22 +1,32 @@
-class Collection {
-    constructor(array){
-        let collection = Object.create(Array.prototype);
+class Collection extends Array {
+    constructor(array) {
+        // call the constructor of the Array class
+        super(array.length);
 
-        collection = (Array.apply(collection, array) || collection);
+        // copy the values from `array` onto `this`;
+        Object.assign(this, array);
+    }
 
-        collection.clear = function() {
-            while(this.length > 0){
-                this.pop();
-            }
+    clear() {
+        console.log('clear method called');
+        this.length = 0;
+    }
 
-            return this
-        };
+    collect(func) {
+        for (let i = 0; i < this.length; i++) {
+            this.splice(i, 1, func(this[i]))
+        }
+    }
 
-        return(collection);
-    };
+    combination(int) {}
+
 }
 
+let collection = new Collection([1, 2, 3, 4]);
+collection.combination(2);
+console.log(collection);
 
-module.exports = {
-    Collection
-};
+
+// module.exports = {
+//     Collection
+// };
