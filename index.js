@@ -24,27 +24,27 @@ class Collection extends Array {
     combination(int) {
         let allArray = [];
 
-        let combos = (fullArray, fullLen, pushBack, start, curLen) => {
+        let combos = (array, iterations, pushBack, startIndex = 0, exitIndex = iterations) => {
             // pushBack stack
-            if (pushBack.length === fullLen)
-                allArray.push(pushBack.slice(0,fullLen));
+            if (pushBack.length === iterations)
+                allArray.push(pushBack.slice(0,iterations));
 
-            if (curLen < 0) return;
-            for (let i=start; i<fullArray.length; i++) {
-                pushBack.push(fullArray[i]);
-                combos(fullArray, fullLen, pushBack, i+1, curLen-1);
+            if (exitIndex < 0) return;
+            for (let i=startIndex; i<array.length; i++) {
+                pushBack.push(array[i]);
+                combos(array, iterations, pushBack, i+1, exitIndex-1);
                 pushBack.pop();
             }
         };
 
-        combos(this, int, [], 0, int);
+        combos(this, int, []);
         return allArray
     }
 
 }
 
-let collection = new Collection([1, 2, 3, 4]);
-a = collection.combination(3);
+let collection = new Collection([1, 2, 3, 4, 5]);
+a = collection.combination(4);
 console.log(a);
 
 
