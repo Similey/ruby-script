@@ -1,6 +1,6 @@
 // import * as helpers from './helpers'
 const helpers = require('./helpers');
-
+// TODO make sure that when returning you return a collection and not an array
 class Collection extends Array {
     constructor(array) {
         // call the constructor of the Array class
