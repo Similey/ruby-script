@@ -1,0 +1,12 @@
+{
+  "name": "ruby-script-test",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "jonny-b",
+  "license": "MIT",
+  "dependencies": {
+    "jest": "^24.8.0",
+    "ruby-script": "^1.0.2"
+  }
+}

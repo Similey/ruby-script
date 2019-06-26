@@ -1,11 +1,7 @@
 // import * as helpers from './helpers'
 const helpers = require('./helpers');
 
-exports.Collection = function(array) {
-    return new C(array)
-};
-
-class C extends Array {
+class Collection extends Array {
     constructor(array) {
         // call the constructor of the Array class
         super(array.length);
@@ -59,3 +55,5 @@ class C extends Array {
     }
 
 }
+
+module.exports = Collection;
