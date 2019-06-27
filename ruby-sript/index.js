@@ -1,6 +1,5 @@
 // import * as helpers from './helpers'
 const helpers = require('./helpers');
-// TODO make sure that when returning you return a collection and not an array
 class Collection extends Array {
     constructor(array) {
         // call the constructor of the Array class
@@ -29,7 +28,7 @@ class Collection extends Array {
     }
 
     combination(int) {
-        let allArray = [];
+        let allArray = new Collection([]);
 
         let combos = (array, iterations, pushBack, startIndex = 0, exitIndex = iterations) => {
             // pushBack stack
@@ -44,12 +43,13 @@ class Collection extends Array {
             }
         };
 
-        combos(this, int, []);
+        let pushBack = new Collection([]);
+        combos(this, int, pushBack);
         return allArray
     }
 
     compact() {
-        let compactArray = [];
+        let compactArray = new Collection([]);
         for (let i = 0; i < this.length; i++) {
             if (this[i] !== null && this[i] !== undefined) {
                 compactArray.push(this[i])
