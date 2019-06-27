@@ -17,6 +17,10 @@ class Collection extends Array {
 
     collect(func) {
         let collectedArray = this.slice();
+        if (func === undefined || func === null)
+        {
+            return collectedArray;
+        }
         for (let i = 0; i < collectedArray.length; i++) {
             collectedArray.splice(i, 1, func(collectedArray[i]))
         }

@@ -34,7 +34,7 @@ Invokes the given function once for each element of collection.
 
 Creates a new array with the result returned by the function.
 
-If no block is given ...
+Returns the collection unaltered if no block is given.
 
 ```js
 let collection = new Collection([1,2,3,4]);
