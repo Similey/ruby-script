@@ -65,11 +65,32 @@ collection.combination(5);
 ```
 
 ### compact
-Returns a copy of _this_ with all instances of _undefined_ and _null_ removed
+Returns a copy of _this_ with all instances of _undefined_ and _null_ removed.
 
 ```js
 let collection = new Collection([1,undefined,2,null,3,4]);
 
 collection.compact()
 //=> [1,2,3,4]
+```
+
+### concat
+Overrides Arrays concat on the Collection class.
+
+Appends the elements of array/collection to self.
+
+Optional second argument allows second array to be appended.
+```js
+let collection = new Collection([1,2,3]);
+
+collection.concat(4);
+//=> [1,2,3,4]
+
+let collection2 = new Collection([4]);
+collection.concat(collection2);
+//=> [1,2,3,4]
+
+collection2 = new Collection([5]);
+collection.concat(4, collection2)
+//=> [1,2,3,4,5]
 ```

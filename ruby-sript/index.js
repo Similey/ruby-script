@@ -1,5 +1,5 @@
 // import * as helpers from './helpers'
-const helpers = require('./helpers');
+
 class Collection extends Array {
     constructor(array) {
         // call the constructor of the Array class
@@ -16,8 +16,7 @@ class Collection extends Array {
 
     collect(func) {
         let collectedArray = this.slice();
-        if (func === undefined || func === null)
-        {
+        if (func === undefined || func === null) {
             return collectedArray;
         }
         for (let i = 0; i < collectedArray.length; i++) {
@@ -56,6 +55,17 @@ class Collection extends Array {
             }
         }
         return compactArray
+    }
+
+    concat(array1, array2 = null) {
+        for (let i = 0; i < array1.length; i++) {
+            this.push(array1[i])
+        }
+        if (array2 !== null) {
+            for (let i = 0; i < array2.length; i++) {
+                this.push(array2[i])
+            }
+        }
     }
 
 }

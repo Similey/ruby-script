@@ -23,14 +23,16 @@ describe('clear', () => {
 describe('collect', () => {
     test('should invoke the given function once for each element of collection', () => {
         let c = new Collection([1, 2, 3, 4]);
-        let i = 0;
         let collect = c.collect((n) => {
-            return i += 1
+            return n * 2
         });
 
-        expect(c.length).toBe(4);
-        expect(i).toBe(4);
-        expect(typeof c.collect === 'function').toBe(true)
+        expect(collect.length).toBe(4);
+        expect(collect[0]).toBe(2);
+        expect(collect[1]).toBe(4);
+        expect(collect[2]).toBe(6);
+        expect(collect[3]).toBe(8);
+        expect(typeof collect.collect === 'function').toBe(true)
 
     });
 
@@ -143,5 +145,57 @@ describe('compact', () => {
         expect(comp[2]).toBe(3);
 
         expect(typeof comp.compact === 'function').toBe(true)
+    });
+});
+
+describe('concat', () => {
+    it('should append the elements of another array to this', () => {
+        let collection = new Collection([1, 2, 3]);
+        collection.concat([4]);
+
+        expect(collection.length).toBe(4);
+        expect(collection.includes(4)).toBe(true);
+    });
+
+    it('should append the elements of multiple arrays to this', () => {
+        let collection = new Collection([1, 2, 3]);
+        let concat1 = [4];
+        let concat2 = [5];
+        collection.concat(concat1, concat2);
+
+        expect(collection.length).toBe(5);
+        expect(collection.includes(4)).toBe(true);
+        expect(collection.includes(5)).toBe(true);
+    });
+
+    it('should append the elements of another collection to this', () => {
+        let collection = new Collection([1, 2, 3]);
+        let concat = new Collection([4]);
+        collection.concat(concat);
+
+        expect(collection.length).toBe(4);
+        expect(collection.includes(4)).toBe(true);
+    });
+
+    it('should append the elements of multiple collections to this', () => {
+        let collection = new Collection([1, 2, 3]);
+        let concat1 = new Collection([4]);
+        let concat2 = new Collection([5]);
+        collection.concat(concat1, concat2);
+
+        expect(collection.length).toBe(5);
+        expect(collection.includes(4)).toBe(true);
+        expect(collection.includes(5)).toBe(true);
+    });
+
+    it('should append the elements of multiple one array and one collection', () => {
+        let collection = new Collection([1, 2, 3]);
+        let concat1 = [4];
+        let concat2 = new Collection([5]);
+        collection.concat(concat1, concat2);
+
+        expect(collection.length).toBe(5);
+        expect(collection.includes(4)).toBe(true);
+        expect(collection.includes(5)).toBe(true);
     });
 });
