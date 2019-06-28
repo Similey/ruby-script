@@ -117,6 +117,22 @@ class Collection extends Array {
         }
         return result;
     }
+
+    delete(value, callback = null) {
+        let result;
+        for (let i = 0; i < this.length; i++) {
+            if (this[i] === value) {
+                result = this[i];
+                this.splice(i, 1)
+            }
+        }
+
+        if (result === undefined) {
+            return callback === null ? null : callback();
+        } else {
+            return result;
+        }
+    }
 }
 
 module.exports = Collection;

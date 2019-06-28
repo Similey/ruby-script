@@ -232,9 +232,9 @@ describe('count', () => {
     });
 
     test('should return count of element with longer arrays', () => {
-        let collection = new Collection([new Collection([1,2,3]), [2,3,4,5,6]]);
+        let collection = new Collection([new Collection([1, 2, 3]), [2, 3, 4, 5, 6]]);
         // expect(collection.count([1,2,3])).toEqual(1);
-        expect(collection.count([2,3,4,5,6,7])).toEqual(0);
+        expect(collection.count([2, 3, 4, 5, 6, 7])).toEqual(0);
     });
 
     test('should return count of element with decimals', () => {
@@ -246,21 +246,23 @@ describe('count', () => {
 });
 
 describe('cycle', () => {
-   test('should call block 2 times and return collection', () => {
-       let collection = new Collection([1,2,3]);
-       let cy = collection.cycle(2, (x) => {return x*2});
-       expect(cy.length).toBe(6);
-       expect(cy[0]).toBe(2);
-       expect(cy[1]).toBe(4);
-       expect(cy[2]).toBe(6);
-       expect(cy[3]).toBe(2);
-       expect(cy[4]).toBe(4);
-       expect(cy[5]).toBe(6);
-       expect(typeof cy.cycle === 'function').toBe(true);
-   });
+    test('should call block 2 times and return collection', () => {
+        let collection = new Collection([1, 2, 3]);
+        let cy = collection.cycle(2, (x) => {
+            return x * 2
+        });
+        expect(cy.length).toBe(6);
+        expect(cy[0]).toBe(2);
+        expect(cy[1]).toBe(4);
+        expect(cy[2]).toBe(6);
+        expect(cy[3]).toBe(2);
+        expect(cy[4]).toBe(4);
+        expect(cy[5]).toBe(6);
+        expect(typeof cy.cycle === 'function').toBe(true);
+    });
 
     test('should return an extended collection with duplicates of original values', () => {
-        let collection = new Collection([1,2,3]);
+        let collection = new Collection([1, 2, 3]);
         let cy = collection.cycle(2);
         expect(cy.length).toBe(6);
         expect(cy[0]).toBe(1);
@@ -273,14 +275,60 @@ describe('cycle', () => {
     });
 
     test('should return null if non-positive integer is passed', () => {
-        let collection = new Collection([1,2,3]);
-        let cy = collection.cycle(-2, (x) => {return x*3});
+        let collection = new Collection([1, 2, 3]);
+        let cy = collection.cycle(-2, (x) => {
+            return x * 3
+        });
         expect(cy).toBe(null);
     });
 
     test('should return null if collection is empty', () => {
         let collection = new Collection([]);
-        let cy = collection.cycle(-2, (x) => {return x*3});
+        let cy = collection.cycle(-2, (x) => {
+            return x * 3
+        });
         expect(cy).toBe(null);
+    });
+});
+
+describe('delete', () => {
+    test('should delete all 2s from collection', () => {
+        let collection = new Collection([1, 2, 3, 4, 2]);
+        collection.delete(2);
+        expect(collection.length).toBe(3);
+        expect(collection[0]).toBe(1);
+        expect(collection[1]).toBe(3);
+        expect(collection[2]).toBe(4);
+    });
+
+    test('should delete all 2s from collection', () => {
+        let collection = new Collection([1, 2, 3, 4, 2]);
+        let del = collection.delete(2);
+        expect(del).toBe(2);
+    });
+
+    test('should delete all 2s from collection and not result of block', () => {
+        let collection = new Collection([1, 2, 3, 4, 2]);
+        collection.delete(2, () => {
+            return 'not found'
+        });
+        expect(collection.length).toBe(3);
+        expect(collection[0]).toBe(1);
+        expect(collection[1]).toBe(3);
+        expect(collection[2]).toBe(4);
+    });
+
+    test('should return result of block and not change collection', () => {
+        let collection = new Collection([1, 2, 3, 4, 2]);
+        let del = collection.delete(5, () => {
+            return 'not found'
+        });
+        expect(del).toBe('not found');
+        expect(collection.length).toBe(5);
+        expect(collection[0]).toBe(1);
+        expect(collection[1]).toBe(2);
+        expect(collection[2]).toBe(3);
+        expect(collection[3]).toBe(4);
+        expect(collection[4]).toBe(2);
     });
 });

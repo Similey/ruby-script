@@ -153,3 +153,32 @@ collection2 = new Collection([]);
 collection2.cycle(2, (n) => {return n*2});
 //=> null
 ```
+
+### delete
+Deletes all items from _this_ that are equal to argument.
+
+Returns the last deleted item, or _null_ if no matching item is found.
+
+If the optional code block is given, the result of the block is return if the item is not found. (To remove nil or 
+undefined elements use _.compact_).
+
+Returns _null_ if no block is provided and item is not found.
+
+```js
+collection = new Collection([1,2,3,4,2]);
+
+collection.delete(2);
+//=> 2
+//=> collection -> [1,3,4]
+
+collection.delete(1);
+//=> 1
+//=> collection -> [2,3,4,2]
+
+collection.delete(5, () => {return 'not found'});
+//=> 'not found'
+//=> collection -> [1,2,3,4,2]
+
+collection.delete(5, () => {return 'not found'});
+//=> null
+```
