@@ -203,7 +203,7 @@ describe('concat', () => {
 describe('count', () => {
     test('should return number of elements in collection', () => {
         let collection = new Collection(["1", "1", 2, 3]);
-        expect(collection.count()).toEqual(4);
+        expect(collection.count()).toBe(4);
     });
 
     test('should return count of elements which equal the given parameter', () => {
@@ -213,10 +213,10 @@ describe('count', () => {
         let param3 = [3];
         let param4 = new Collection([4]);
 
-        expect(collection.count(param1)).toEqual(2);
-        expect(collection.count(param2)).toEqual(1);
-        expect(collection.count(param3)).toEqual(1);
-        expect(collection.count(param4)).toEqual(1);
+        expect(collection.count(param1)).toBe(2);
+        expect(collection.count(param2)).toBe(1);
+        expect(collection.count(param3)).toBe(1);
+        expect(collection.count(param4)).toBe(1);
     });
 
     test('should return count of elements for which the given block returns a true value', () => {
@@ -243,4 +243,44 @@ describe('count', () => {
         expect(collection.count(1)).toEqual(0);
         expect(collection.count(2)).toEqual(1);
     })
+});
+
+describe('cycle', () => {
+   test('should call block 2 times and return collection', () => {
+       let collection = new Collection([1,2,3]);
+       let cy = collection.cycle(2, (x) => {return x*2});
+       expect(cy.length).toBe(6);
+       expect(cy[0]).toBe(2);
+       expect(cy[1]).toBe(4);
+       expect(cy[2]).toBe(6);
+       expect(cy[3]).toBe(2);
+       expect(cy[4]).toBe(4);
+       expect(cy[5]).toBe(6);
+       expect(typeof cy.cycle === 'function').toBe(true);
+   });
+
+    test('should return an extended collection with duplicates of original values', () => {
+        let collection = new Collection([1,2,3]);
+        let cy = collection.cycle(2);
+        expect(cy.length).toBe(6);
+        expect(cy[0]).toBe(1);
+        expect(cy[1]).toBe(2);
+        expect(cy[2]).toBe(3);
+        expect(cy[3]).toBe(1);
+        expect(cy[4]).toBe(2);
+        expect(cy[5]).toBe(3);
+        expect(typeof cy.cycle === 'function').toBe(true);
+    });
+
+    test('should return null if non-positive integer is passed', () => {
+        let collection = new Collection([1,2,3]);
+        let cy = collection.cycle(-2, (x) => {return x*3});
+        expect(cy).toBe(null);
+    });
+
+    test('should return null if collection is empty', () => {
+        let collection = new Collection([]);
+        let cy = collection.cycle(-2, (x) => {return x*3});
+        expect(cy).toBe(null);
+    });
 });

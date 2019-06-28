@@ -14,13 +14,13 @@ class Collection extends Array {
         this.length = 0;
     }
 
-    collect(func) {
+    collect(callback) {
         let collectedArray = this.slice();
-        if (func === undefined || func === null) {
+        if (callback === undefined || callback === null) {
             return collectedArray;
         }
         for (let i = 0; i < collectedArray.length; i++) {
-            collectedArray.splice(i, 1, func(collectedArray[i]))
+            collectedArray.splice(i, 1, callback(collectedArray[i]))
         }
 
         return collectedArray
@@ -101,6 +101,21 @@ class Collection extends Array {
             }
             return count;
         }
+    }
+
+    cycle(int, callback = null) {
+        if (int < 0 || this.length === 0) return null;
+        let result = new Collection([]);
+        for (let i = 0; i < int; i++) {
+            for (let j = 0; j < this.length; j++) {
+                if (callback === null) {
+                    result.push(this[j])
+                } else {
+                    result.push(callback(this[j]))
+                }
+            }
+        }
+        return result;
     }
 }
 
