@@ -68,6 +68,40 @@ class Collection extends Array {
         }
     }
 
+    count(element = null) {
+        if (element === null) {
+            let count = 0;
+            for (let i = 0; i < this.length; i++) {
+                count++;
+            }
+            return count
+        } else if (Array.isArray(element)) {
+            let count = 0;
+            for (let i = 0; i < this.length; i++) {
+                if (Array.isArray(this[i]) && this[i].length === element.length) {
+                    let match;
+                    for (let j = 0; j < this[i].length; j++) {
+                        this[i][j] === element[j] ? match = true : match = false;
+                        if (match === false) break;
+                    }
+                    if (match === true) count++;
+                }
+            }
+            return count;
+        } else if (typeof element === 'function') {
+            let count = 0;
+            for (let i = 0; i < this.length; i++) {
+                if (element(this[i])) count++
+            }
+            return count;
+        } else {
+            let count = 0;
+            for (let i = 0; i < this.length; i++) {
+                if (this[i] === element) count++;
+            }
+            return count;
+        }
+    }
 }
 
 module.exports = Collection;

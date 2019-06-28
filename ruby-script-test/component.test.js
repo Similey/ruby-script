@@ -199,3 +199,48 @@ describe('concat', () => {
         expect(collection.includes(5)).toBe(true);
     });
 });
+
+describe('count', () => {
+    test('should return number of elements in collection', () => {
+        let collection = new Collection(["1", "1", 2, 3]);
+        expect(collection.count()).toEqual(4);
+    });
+
+    test('should return count of elements which equal the given parameter', () => {
+        let collection = new Collection(["1", "1", 2, [3], new Collection([4])]);
+        let param1 = '1';
+        let param2 = 2;
+        let param3 = [3];
+        let param4 = new Collection([4]);
+
+        expect(collection.count(param1)).toEqual(2);
+        expect(collection.count(param2)).toEqual(1);
+        expect(collection.count(param3)).toEqual(1);
+        expect(collection.count(param4)).toEqual(1);
+    });
+
+    test('should return count of elements for which the given block returns a true value', () => {
+        let collection = new Collection(["1", "1", 2, 3]);
+        expect(collection.count((x) => {
+            return x % 2 === 0
+        })).toEqual(1);
+    });
+
+    test('should return count of 0 when no elements match', () => {
+        let collection = new Collection(["1", "1", 2, 3]);
+        expect(collection.count(1)).toEqual(0);
+    });
+
+    test('should return count of element with longer arrays', () => {
+        let collection = new Collection([new Collection([1,2,3]), [2,3,4,5,6]]);
+        // expect(collection.count([1,2,3])).toEqual(1);
+        expect(collection.count([2,3,4,5,6,7])).toEqual(0);
+    });
+
+    test('should return count of element with decimals', () => {
+        let collection = new Collection([1.1, 2]);
+        expect(collection.count(1.1)).toEqual(1);
+        expect(collection.count(1)).toEqual(0);
+        expect(collection.count(2)).toEqual(1);
+    })
+});

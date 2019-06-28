@@ -94,3 +94,32 @@ collection2 = new Collection([5]);
 collection.concat(4, collection2)
 //=> [1,2,3,4,5]
 ```
+
+### count
+Return the number of elements in collection.
+
+If an argument is given, counts the number of elements which equal argument using ===.
+
+If a block is given, counts the number of elements for which the block returns true.
+
+```js
+let collection = new Collection(['1','1',2,[3,4]]);
+
+collection.count(4);
+//=> 4
+
+collection.count('1');
+//=> 2
+
+collection.count(1);
+//=> 0
+
+collection.count(2);
+//=> 1
+
+collection.count([3,4]);
+//=> 1
+
+collection.count([3,4,5]);
+//=> 0
+```
