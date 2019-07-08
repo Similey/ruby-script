@@ -182,3 +182,6 @@ collection.delete(5, () => {return 'not found'});
 collection.delete(5, () => {return 'not found'});
 //=> null
 ```
+
+### delete_at
+
