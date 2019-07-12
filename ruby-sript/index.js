@@ -133,6 +133,17 @@ class Collection extends Array {
             return result;
         }
     }
+
+    delete_at(index) {
+        if (index > this.length) return null;
+        let del_value;
+        for (let i = 0; i < this.length; i++) {
+            if (i === index) {
+                del_value = this.splice(i,1)[0];
+            }}
+
+        return del_value
+    }
 }
 
 module.exports = Collection;

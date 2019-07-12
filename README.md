@@ -182,3 +182,20 @@ collection.delete(5, () => {return 'not found'});
 collection.delete(5, () => {return 'not found'});
 //=> null
 ```
+
+### delete_at
+Deletes the element at the specified index, returning that element, or null if the index is out of range.
+
+See also .slice
+
+```js
+collection = new Collection([1,2,3,4,5]);
+
+collection.delete_at(2)
+//=> 3
+//=> collection -> [1,2,4,5]
+
+collection.delete_at(10)
+//=> null
+
+```
