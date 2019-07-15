@@ -103,7 +103,7 @@ collection.concat(4, collection2)
 ### count
 Return the number of elements in collection.
 
-If an argument is given, counts the number of elements which equal argument using ===.
+If an argument is given, counts the number of elements which equal argument using _===_.
 
 If a block is given, counts the number of elements for which the block returns true.
 
@@ -197,5 +197,21 @@ collection.delete_at(2)
 
 collection.delete_at(10)
 //=> null
+```
 
+### delete_if
+Deletes every element of this for which block evaluates to true.
+
+The array is changed instantly every time the block is called, not after the iteration is over.
+
+Returns the collection unaltered if no block is given.
+
+```js
+collection = new Collection([1,2,3,4,5]);
+
+collection.delete_if((x) => {return x%2 === 0})
+//=> collection -> [1,3,5]
+
+collection.delete_if()
+//=> [1,2,3,4,5]
 ```

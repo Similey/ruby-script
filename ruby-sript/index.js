@@ -139,10 +139,19 @@ class Collection extends Array {
         let del_value;
         for (let i = 0; i < this.length; i++) {
             if (i === index) {
-                del_value = this.splice(i,1)[0];
-            }}
+                del_value = this.splice(i, 1)[0];
+            }
+        }
 
         return del_value
+    }
+
+    delete_if(callback) {
+        for (let i = 0; i < this.length; i++) {
+            let result = callback(this[i]);
+            if (result === true) this.splice(i, 1)
+        }
+        return this;
     }
 }
 

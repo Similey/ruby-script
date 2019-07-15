@@ -356,4 +356,31 @@ describe('ruby-script', () => {
             expect(del).toEqual(null)
         });
     });
+
+    describe('delete_if', () => {
+        it('should delete every element for which block evaluates true', () => {
+            let collection = new Collection([1, 2, 3, 4, 5]);
+            let result = new Collection([1, 3, 5]);
+            collection.delete_if((x) => {
+                return x % 2 === 0
+            });
+
+            expect(collection).toEqual(result);
+        });
+
+        it('should modified collection after each block and not once at the end', () => {
+            //    I don't know how to test this
+        });
+
+        it('should return unalterd array if no block is provided', () => {
+            let collection = new Collection([1, 2, 3, 4, 5]);
+            let result = new Collection([1, 2, 3, 4, 5]);
+
+            collection.delete_if((x) => {
+                return this.length === 1
+            });
+
+            expect(collection).toEqual(result);
+        });
+    });
 });
