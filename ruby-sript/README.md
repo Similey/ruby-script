@@ -215,3 +215,20 @@ collection.delete_if((x) => {return x%2 === 0})
 collection.delete_if()
 //=> [1,2,3,4,5]
 ```
+
+### dig
+
+Extracts the nested value specified by the sequence of ids by calling dig at each step, returning _undefined_ if any intermediate step is _undefined_.
+
+```js
+collection = new Collection([[1, [2, 3]]]);
+
+collection.dig(0,1,1)
+//=> 3
+
+collection.dig(1,2,3)
+//=> undefined
+
+collection.dig(0,0)
+//=> error
+```

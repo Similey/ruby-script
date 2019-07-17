@@ -2,11 +2,11 @@
 
 class Collection extends Array {
     constructor(array) {
-        // call the constructor of the Array class
-        super(array.length);
+            // call the constructor of the Array class
+            super(array.length);
 
-        // copy the values from `array` onto `this`;
-        Object.assign(this, array);
+            // copy the values from `array` onto `this`;
+            Object.assign(this, array);
     }
 
     clear() {
@@ -152,6 +152,30 @@ class Collection extends Array {
             if (result === true) this.splice(i, 1)
         }
         return this;
+    }
+
+
+    dig(...indices) {
+        // returning null if any intermediate step is null
+        if (this[indices] === null) return null;
+
+        // when we get to the end of indices we are done digging.
+        if (indices.length === 1) return this[indices];
+
+        // remove current index from indices
+        let digValue = typeof(this) === "object" ? this[indices[0]] : this;
+        let indexes = indices.splice(indices[0]);
+
+        try {
+            // create a new collection that has been dug out of 'this'
+            let collection = new Collection(digValue);
+
+            return collection.dig(...indexes);
+        } catch (err) {
+            // Will get type error if we try to instantiate a Collection with a non array value.
+            throw 'While digging an object was found from which dig could not be called'
+
+        }
     }
 }
 

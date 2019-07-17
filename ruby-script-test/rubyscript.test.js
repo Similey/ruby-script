@@ -383,4 +383,51 @@ describe('ruby-script', () => {
             expect(collection).toEqual(result);
         });
     });
+
+    describe('dig', () => {
+        it('should return nested value given a set of ids', () => {
+            let collection = new Collection([1, [2, [3, [4, [5, [6, [7]]]]]]]);
+            let dig1 = collection.dig(1);
+            let dig2 = collection.dig(1, 1);
+            let dig3 = collection.dig(1, 1, 1);
+            let dig4 = collection.dig(1, 1, 1, 1);
+            let dig5 = collection.dig(1, 1, 1, 1, 1,);
+            let dig6 = collection.dig(1, 1, 1, 1, 1, 1);
+            let dig7 = collection.dig(1, 1, 1, 1, 1, 1, 0);
+
+            expect(dig1).toEqual([2, [3, [4, [5, [6, [7]]]]]]);
+            expect(dig2).toEqual([3, [4, [5, [6, [7]]]]]);
+            expect(dig3).toEqual([4, [5, [6, [7]]]]);
+            expect(dig4).toEqual([5, [6, [7]]]);
+            expect(dig5).toEqual([6, [7]]);
+            expect(dig6).toEqual([7]);
+            expect(dig7).toEqual(7);
+        });
+
+        it('should return null for no match', () => {
+            let collection = new Collection([1, [2, [3, [4, [5, [6, [7]]]]]]]);
+
+            let dig1 = collection.dig(2);
+            let dig2 = collection.dig(1, 2);
+            let dig3 = collection.dig(1, 1, 2);
+            let dig4 = collection.dig(1, 1, 1, 2);
+            let dig5 = collection.dig(1, 1, 1, 1, 2);
+            let dig6 = collection.dig(1, 1, 1, 1, 1, 2);
+            let dig7 = collection.dig(1, 1, 1, 1, 1, 1, 2);
+
+            expect(dig1).toBe(undefined);
+            expect(dig2).toBe(undefined);
+            expect(dig3).toBe(undefined);
+            expect(dig4).toBe(undefined);
+            expect(dig5).toBe(undefined);
+            expect(dig6).toBe(undefined);
+            expect(dig7).toBe(undefined);
+        });
+
+        it('should error if called on a non collection return value', () => {
+            let collection = new Collection([1, [2, [3, [4, [5, [6, [7]]]]]]]);
+
+            expect(() => {collection.dig(1,0,0)}).toThrow('While digging an object was found from which dig could not be called')
+        })
+    });
 });
