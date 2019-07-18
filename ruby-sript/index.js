@@ -2,11 +2,11 @@
 
 class Collection extends Array {
     constructor(array) {
-            // call the constructor of the Array class
-            super(array.length);
+        // call the constructor of the Array class
+        super(array.length);
 
-            // copy the values from `array` onto `this`;
-            Object.assign(this, array);
+        // copy the values from `array` onto `this`;
+        Object.assign(this, array);
     }
 
     isCollection() {
@@ -167,7 +167,7 @@ class Collection extends Array {
         if (indices.length === 1) return this[indices];
 
         // remove current index from indices
-        let digValue = typeof(this) === "object" ? this[indices[0]] : this;
+        let digValue = typeof (this) === "object" ? this[indices[0]] : this;
         let indexes = indices.splice(indices[0]);
 
         try {
@@ -182,15 +182,32 @@ class Collection extends Array {
         }
     }
 
-    drop(value){
-        if(typeof(value) !== 'number' || value < 0) throw 'Argument Error';
+    drop(value) {
+        if (typeof (value) !== 'number' || value < 0) throw 'Argument Error';
 
         let copy = this;
-        for(let i =0; i < value; i++){
+        for (let i = 0; i < value; i++) {
             copy.shift();
         }
         return copy;
     }
+
+    drop_while(callback) {
+        let copy = this;
+
+        for (let i = 0; i < copy.length; i++) {
+            let result = callback(i);
+            if (result === null || result === false) break;
+            copy.shift();
+        }
+        return copy;
+    }
+
+    // include(value){
+    //     for(let i = 0; i < this.length; i++){
+    //         if(this[i] === value) return true;
+    //     }
+    // }
 }
 
 module.exports = Collection;

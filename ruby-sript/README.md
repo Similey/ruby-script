@@ -260,3 +260,17 @@ collection.drop(-1);
 collection.drop('1');
 //=> Argument Error
 ```
+
+### drop_while
+Drops elements up to, but not including, the first element for which the block return _null_ or _false_ and returns an 
+_collection_ containing the remaining elements
+```js
+collection = new Collection([1, 2, 3, 4, 5]);
+
+collection.drop_while((i) => {return i < 3});
+//=> [3, 4, 5]
+
+collection2 = new Collection([3,4,5]);
+collection2.drop_while((i) => {return collection[i] > i});
+//=> [5]
+```
