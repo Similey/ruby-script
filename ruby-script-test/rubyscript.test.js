@@ -11,6 +11,13 @@ describe('ruby-script', () => {
         expect(c[3]).toBe(4);
     });
 
+    describe('isCollection', () => {
+        it('should return true', () => {
+            let c = new Collection([1, 2, 3, 4]);
+            expect(c.isCollection()).toBe(true);
+        })
+    });
+
     describe('clear', () => {
         it('should removes all elements of this', () => {
             let c = new Collection([1, 2, 3, 4]);
@@ -476,22 +483,28 @@ describe('ruby-script', () => {
     describe('drop_while', () => {
         it('should drop each element until block returns false', () => {
             let collection = new Collection([1, 2, 3, 4, 5]);
-            let dropWhile = collection.drop_while((i) => {return i < 3});
+            let dropWhile = collection.drop_while((i) => {
+                return i < 3
+            });
 
             expect(dropWhile).toEqual(new Collection([4, 5]));
         });
 
         it('should drop each element until block returns null', () => {
             let collection = new Collection([1, 2, 3, 4, 5]);
-            let collection2 = new Collection([3,4,5]);
-            let dropWhile = collection2.drop_while((i) => {return collection[i] > i});
+            let collection2 = new Collection([3, 4, 5]);
+            let dropWhile = collection2.drop_while((i) => {
+                return collection[i] > i
+            });
 
             expect(dropWhile).toEqual(new Collection([5]));
         });
 
         it('should return a collection', () => {
             let collection = new Collection([1, 2, 3, 4, 5]);
-            let dropWhile = collection.drop_while((i) => {return i < 3});
+            let dropWhile = collection.drop_while((i) => {
+                return i < 3
+            });
 
             expect(dropWhile.isCollection()).toEqual(true);
         });
