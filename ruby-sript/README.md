@@ -1,7 +1,7 @@
-#ruby-script
-Adding Ruby like methods for Arrays called Collections
+# ruby-script
+Creating a Ruby-Array like class called Collection
 
-##GitHubRepo
+## GitHubRepo
 Feel free to contribute or log issues!
 
 https://github.com/Jonny-B/ruby-script
