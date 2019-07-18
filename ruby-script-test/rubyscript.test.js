@@ -16,8 +16,13 @@ describe('ruby-script', () => {
             let c = new Collection([1, 2, 3, 4]);
             c.clear();
             expect(c.length).toBe(0);
-            expect(typeof c.clear === 'function').toBe(true)
-        })
+        });
+
+        it('should return a collection', () => {
+            let c = new Collection([1, 2, 3, 4]);
+            c.clear();
+            expect(c.isCollection()).toBe(true)
+        });
     });
 
     describe('collect', () => {
@@ -32,8 +37,13 @@ describe('ruby-script', () => {
             expect(collect[1]).toBe(4);
             expect(collect[2]).toBe(6);
             expect(collect[3]).toBe(8);
-            expect(typeof collect.collect === 'function').toBe(true)
 
+        });
+
+        it('should return a collection', () => {
+            let c = new Collection([1, 2, 3, 4]);
+
+            expect(c.isCollection()).toBe(true)
         });
 
         it('should create a new collection with the result returned by the function', () => {
@@ -47,7 +57,6 @@ describe('ruby-script', () => {
             expect(collect[1]).toBe(4);
             expect(collect[2]).toBe(6);
             expect(collect[3]).toBe(8);
-            expect(typeof c.collect === 'function').toBe(true)
         });
 
         it('should return the collection unaltered if no block is given', () => {
@@ -59,7 +68,6 @@ describe('ruby-script', () => {
             expect(collect[1]).toBe(2);
             expect(collect[2]).toBe(3);
             expect(collect[3]).toBe(4);
-            expect(typeof collect.collect === 'function').toBe(true)
         });
     });
 
@@ -70,9 +78,9 @@ describe('ruby-script', () => {
             result = new Collection([[1], [2], [3], [4]]);
             combo.forEach((x, i) => {
                 expect(x[0]).toBe(result[i][0]);
-                expect(typeof x.combination === 'function').toBe(true)
+                expect(x.isCollection()).toBe(true)
             });
-            expect(typeof combo.combination === 'function').toBe(true)
+            expect(combo.isCollection()).toBe(true)
         });
 
         it('should all combinations for 2', () => {
@@ -82,9 +90,9 @@ describe('ruby-script', () => {
             combo.forEach((x, i) => {
                 expect(x[0]).toBe(result[i][0]);
                 expect(x[1]).toBe(result[i][1]);
-                expect(typeof x.combination === 'function').toBe(true)
+                expect(x.isCollection()).toBe(true)
             });
-            expect(typeof combo.combination === 'function').toBe(true)
+            expect(combo.isCollection()).toBe(true)
         });
 
         it('should all combinations for 3', () => {
@@ -95,9 +103,9 @@ describe('ruby-script', () => {
                 expect(x[0]).toBe(result[i][0]);
                 expect(x[1]).toBe(result[i][1]);
                 expect(x[2]).toBe(result[i][2]);
-                expect(typeof x.combination === 'function').toBe(true)
+                expect(x.isCollection()).toBe(true)
             });
-            expect(typeof combo.combination === 'function').toBe(true)
+            expect(combo.isCollection()).toBe(true)
         });
 
         it('should all combinations for 4', () => {
@@ -109,9 +117,9 @@ describe('ruby-script', () => {
                 expect(x[1]).toBe(result[i][1]);
                 expect(x[2]).toBe(result[i][2]);
                 expect(x[3]).toBe(result[i][3]);
-                expect(typeof x.combination === 'function').toBe(true)
+                expect(x.isCollection()).toBe(true)
             });
-            expect(typeof combo.combination === 'function').toBe(true)
+            expect(combo.isCollection()).toBe(true)
         });
 
         it('should 0 combinations for 0', () => {
@@ -120,16 +128,16 @@ describe('ruby-script', () => {
             result = new Collection([[]]);
             combo.forEach((x, i) => {
                 expect(x[0]).toBe(result[i][0]);
-                expect(typeof x.combination === 'function').toBe(true)
+                expect(x.isCollection()).toBe(true)
             });
-            expect(typeof combo.combination === 'function').toBe(true)
+            expect(combo.isCollection()).toBe(true)
         });
 
         it('should empty collection for out of bounds values', () => {
             let collection = new Collection([1, 2, 3, 4]);
             combo = collection.combination(5);
             expect(combo.length).toBe(0);
-            expect(typeof combo.combination === 'function').toBe(true)
+            expect(combo.isCollection()).toBe(true)
 
         });
 
@@ -144,7 +152,7 @@ describe('ruby-script', () => {
             expect(comp[1]).toBe(2);
             expect(comp[2]).toBe(3);
 
-            expect(typeof comp.compact === 'function').toBe(true)
+            expect(comp.isCollection()).toBe(true)
         });
     });
 
@@ -258,7 +266,7 @@ describe('ruby-script', () => {
             expect(cy[3]).toBe(2);
             expect(cy[4]).toBe(4);
             expect(cy[5]).toBe(6);
-            expect(typeof cy.cycle === 'function').toBe(true);
+            expect(cy.isCollection()).toBe(true);
         });
 
         test('should return an extended collection with duplicates of original values', () => {
@@ -271,7 +279,7 @@ describe('ruby-script', () => {
             expect(cy[3]).toBe(1);
             expect(cy[4]).toBe(2);
             expect(cy[5]).toBe(3);
-            expect(typeof cy.cycle === 'function').toBe(true);
+            expect(cy.isCollection()).toBe(true);
         });
 
         test('should return null if non-positive integer is passed', () => {
@@ -427,7 +435,41 @@ describe('ruby-script', () => {
         it('should error if called on a non collection return value', () => {
             let collection = new Collection([1, [2, [3, [4, [5, [6, [7]]]]]]]);
 
-            expect(() => {collection.dig(1,0,0)}).toThrow('While digging an object was found from which dig could not be called')
+            expect(() => {
+                collection.dig(1, 0, 0)
+            }).toThrow('While digging an object was found from which dig could not be called')
+        })
+    });
+
+    describe('drop', () => {
+        it('should drop the 3 elements from Collection', () => {
+            let collection = new Collection([1, 2, 3, 4, 5]);
+            let drop = collection.drop(3);
+
+            expect(drop).toEqual(new Collection([4, 5]));
+        });
+
+        it('should return a collection', () => {
+            let collection = new Collection([1, 2, 3, 4, 5]);
+            let drop = collection.drop(3);
+
+            expect(drop.isCollection()).toEqual(true);
+        });
+
+        it('should throw argument error for negative number', () => {
+            let collection = new Collection([1, 2, 3, 4, 5]);
+
+            expect(() => {
+                collection.drop(-1);
+            }).toThrow('Argument Error')
+        });
+
+        it('should throw argument error for non number', () => {
+            let collection = new Collection([1, 2, 3, 4, 5]);
+
+            expect(() => {
+                collection.drop('1');
+            }).toThrow('Argument Error')
         })
     });
 });

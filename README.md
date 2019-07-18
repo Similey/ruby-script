@@ -24,6 +24,16 @@ collection.collect((n) => {return n+1})
 
 ### Collection
 
+### isCollection
+ Removes all elements of _this_.
+ 
+```js
+let collection = new Collection([1,2,3,4]);
+
+collection.isCollection();
+//=> true
+```
+
 ### clear
  Removes all elements of _this_.
  
@@ -191,11 +201,11 @@ See also .slice
 ```js
 collection = new Collection([1,2,3,4,5]);
 
-collection.delete_at(2)
+collection.delete_at(2);
 //=> 3
 //=> collection -> [1,2,4,5]
 
-collection.delete_at(10)
+collection.delete_at(10);
 //=> null
 ```
 
@@ -209,9 +219,44 @@ Returns the collection unaltered if no block is given.
 ```js
 collection = new Collection([1,2,3,4,5]);
 
-collection.delete_if((x) => {return x%2 === 0})
+collection.delete_if((x) => {return x%2 === 0});
 //=> collection -> [1,3,5]
 
-collection.delete_if()
+collection.delete_if();
 //=> [1,2,3,4,5]
+```
+
+### dig
+Extracts the nested value specified by the sequence of ids by calling dig at each step, returning _undefined_ if any intermediate step is _undefined_.
+
+```js
+collection = new Collection([[1, [2, 3]]]);
+
+collection.dig(0,1,1);
+//=> 3
+
+collection.dig(1,2,3);
+//=> undefined
+
+collection.dig(0,0);
+//=> error
+```
+
+### drop
+Drops first n elements from Collection and returns the rest of the elements in an array.
+
+If a negative number is given, raise an ArgumentError
+
+See also .take
+```js
+collection = new Collection([1, 2, 3, 4, 5]);
+
+collection.drop(3);
+//=> [4 ,5]
+
+collection.drop(-1);
+//=> Argument Error
+
+collection.drop('1');
+//=> Argument Error
 ```

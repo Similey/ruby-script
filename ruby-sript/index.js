@@ -9,6 +9,10 @@ class Collection extends Array {
             Object.assign(this, array);
     }
 
+    isCollection() {
+        return true;
+    }
+
     clear() {
         console.log('clear method called');
         this.length = 0;
@@ -176,6 +180,16 @@ class Collection extends Array {
             throw 'While digging an object was found from which dig could not be called'
 
         }
+    }
+
+    drop(value){
+        if(typeof(value) !== 'number' || value < 0) throw 'Argument Error';
+
+        let copy = this;
+        for(let i =0; i < value; i++){
+            copy.shift();
+        }
+        return copy;
     }
 }
 
