@@ -1,7 +1,7 @@
-#ruby-script
-Adding Ruby like methods for Arrays called Collections
+# ruby-script
+Creating a Ruby-Array like class called Collection
 
-##GitHubRepo
+## GitHubRepo
 Feel free to contribute or log issues!
 
 https://github.com/Jonny-B/ruby-script
@@ -23,6 +23,16 @@ collection.collect((n) => {return n+1})
 # API
 
 ### Collection
+
+### isCollection
+ Removes all elements of _this_.
+ 
+```js
+let collection = new Collection([1,2,3,4]);
+
+collection.isCollection();
+//=> true
+```
 
 ### clear
  Removes all elements of _this_.
@@ -103,7 +113,7 @@ collection.concat(4, collection2)
 ### count
 Return the number of elements in collection.
 
-If an argument is given, counts the number of elements which equal argument using ===.
+If an argument is given, counts the number of elements which equal argument using _===_.
 
 If a block is given, counts the number of elements for which the block returns true.
 
@@ -180,5 +190,120 @@ collection.delete(5, () => {return 'not found'});
 //=> collection -> [1,2,3,4,2]
 
 collection.delete(5, () => {return 'not found'});
+//=> null
+```
+
+### delete_at
+Deletes the element at the specified index, returning that element, or null if the index is out of range.
+
+See also .slice
+
+```js
+collection = new Collection([1,2,3,4,5]);
+
+collection.delete_at(2);
+//=> 3
+//=> collection -> [1,2,4,5]
+
+collection.delete_at(10);
+//=> null
+```
+
+### delete_if
+Deletes every element of this for which block evaluates to true.
+
+The array is changed instantly every time the block is called, not after the iteration is over.
+
+Returns the collection unaltered if no block is given.
+
+```js
+collection = new Collection([1,2,3,4,5]);
+
+collection.delete_if((x) => {return x%2 === 0});
+//=> collection -> [1,3,5]
+
+collection.delete_if();
+//=> [1,2,3,4,5]
+```
+
+### dig
+Extracts the nested value specified by the sequence of ids by calling dig at each step, returning _undefined_ if any intermediate step is _undefined_.
+
+```js
+collection = new Collection([[1, [2, 3]]]);
+
+collection.dig(0,1,1);
+//=> 3
+
+collection.dig(1,2,3);
+//=> undefined
+
+collection.dig(0,0);
+//=> error
+```
+
+### drop
+Drops first n elements from Collection and returns the rest of the elements in an array.
+
+If a negative number is given, raise an ArgumentError
+
+See also .take
+```js
+collection = new Collection([1, 2, 3, 4, 5]);
+
+collection.drop(3);
+//=> [4 ,5]
+
+collection.drop(-1);
+//=> Argument Error
+
+collection.drop('1');
+//=> Argument Error
+```
+
+### drop_while
+Drops elements up to, but not including, the first element for which the block return _null_ or _false_ and returns an 
+_collection_ containing the remaining elements
+```js
+collection = new Collection([1, 2, 3, 4, 5]);
+
+collection.drop_while((i) => {return i < 3});
+//=> [3, 4, 5]
+
+collection2 = new Collection([3,4,5]);
+collection2.drop_while((i) => {return collection[i] > i});
+//=> [5]
+```
+
+### each
+Calls the given function once for each element in _this_, passing that element as a parameter. Returns the _Collection_
+itself.
+
+If no block is given, returns the _Collection_ itself.
+```js
+collection = new Collection([1, 2, 3]);
+
+collection.each((x) => {`${console.log(x)} --`})
+//=> produces -> 1 -- 2 -- 3 --
+```
+
+### zip
+Converts any argument to _Collections_ then merges elements of _this_ with correcsponding elements of each argument.
+
+This generates a sequence of _Collection.length_ n-element arrays, length where n is one more than the count of arguments.
+
+If the _length_ of any argument is less than the _length_ of the initial _collection_, _undefined_ values are supplied.
+
+Will return null if _function_ is passed as an argument.
+
+```js
+collection = new Collection([1,2,3,4]);
+a = new Collection(4,5,6);
+b = [7,8,9];
+
+collection.zip(a,b)
+//=> [[1,4,7],[2,5,8],[3,6,9],[4,undefined,undefined]]
+
+collection.zip((a) => {a.pop()}, a,b)
 //=> null
 ```

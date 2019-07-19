@@ -9,6 +9,10 @@ class Collection extends Array {
         Object.assign(this, array);
     }
 
+    isCollection() {
+        return true;
+    }
+
     clear() {
         console.log('clear method called');
         this.length = 0;
@@ -133,6 +137,102 @@ class Collection extends Array {
             return result;
         }
     }
+
+    delete_at(index) {
+        if (index > this.length) return null;
+        let del_value;
+        for (let i = 0; i < this.length; i++) {
+            if (i === index) {
+                del_value = this.splice(i, 1)[0];
+            }
+        }
+
+        return del_value
+    }
+
+    delete_if(callback) {
+        for (let i = 0; i < this.length; i++) {
+            let result = callback(this[i]);
+            if (result === true) this.splice(i, 1)
+        }
+        return this;
+    }
+
+
+    dig(...indices) {
+        // returning null if any intermediate step is null
+        if (this[indices] === null) return null;
+
+        // when we get to the end of indices we are done digging.
+        if (indices.length === 1) return this[indices];
+
+        // remove current index from indices
+        let digValue = typeof (this) === "object" ? this[indices[0]] : this;
+        let indexes = indices.splice(indices[0]);
+
+        try {
+            // create a new collection that has been dug out of 'this'
+            let collection = new Collection(digValue);
+
+            return collection.dig(...indexes);
+        } catch (err) {
+            // Will get type error if we try to instantiate a Collection with a non array value.
+            throw 'While digging an object was found from which dig could not be called'
+
+        }
+    }
+
+    drop(value) {
+        if (typeof (value) !== 'number' || value < 0) throw 'Argument Error';
+
+        let copy = this;
+        for (let i = 0; i < value; i++) {
+            copy.shift();
+        }
+        return copy;
+    }
+
+    drop_while(callback) {
+        let copy = this;
+
+        for (let i = 0; i < copy.length; i++) {
+            let result = callback(i);
+            if (result === null || result === false) break;
+            copy.shift();
+        }
+        return copy;
+    }
+
+    each(callback = null) {
+        if (callback === null) return this;
+        for (let i = 0; i < this.length; i++) {
+            callback(this[i])
+        }
+
+        return this;
+    }
+
+    // include(value){
+    //     for(let i = 0; i < this.length; i++){
+    //         if(this[i] === value) return true;
+    //     }
+    // }
+
+    zip(...lists){
+       if (typeof(lists[0]) === 'function') return null;
+
+       let result = new Collection([]);
+       for(let i=0; i<this.length;i++){
+           let c = new Collection([]);
+            c.push(this[i]);
+           for(let j=0;j<lists.length;j++){
+               c.push(lists[j][i]);
+           }
+           result.push(c);
+       }
+        return result;
+    }
 }
 
 module.exports = Collection;
+
