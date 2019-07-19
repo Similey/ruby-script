@@ -509,4 +509,32 @@ describe('ruby-script', () => {
             expect(dropWhile.isCollection()).toEqual(true);
         });
     });
+
+    describe('each', () => {
+        it('should loop through each element in collection', () => {
+            let collection = new Collection([1, 2, 3]);
+            let result = 0;
+            collection.each((i) => {
+                return result += i
+            });
+
+            expect(result).toBe(6);
+        });
+
+        it('should return this', () => {
+            let collection = new Collection([1, 2, 3]);
+            let each = collection.each((i) => {
+                return i
+            });
+
+            expect(each).toBe(collection);
+        });
+
+        it('should return this if no function is passed as argument', () => {
+            let collection = new Collection([1, 2, 3]);
+            let each = collection.each();
+
+            expect(each).toBe(collection);
+        })
+    });
 });

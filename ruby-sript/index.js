@@ -203,6 +203,15 @@ class Collection extends Array {
         return copy;
     }
 
+    each(callback = null) {
+        if (callback === null) return this;
+        for (let i = 0; i < this.length; i++) {
+            callback(this[i])
+        }
+
+        return this;
+    }
+
     // include(value){
     //     for(let i = 0; i < this.length; i++){
     //         if(this[i] === value) return true;

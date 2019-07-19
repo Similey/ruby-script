@@ -274,3 +274,14 @@ collection2 = new Collection([3,4,5]);
 collection2.drop_while((i) => {return collection[i] > i});
 //=> [5]
 ```
+
+### each
+Calls the given function once for each element in _this_, passing that element as a parameter. Returns the _Collection_
+itself.
+
+If no block is given, returns the _Collection_ itself.
+```js
+collection = new Collection([1, 2, 3]);
+
+collection.each((x) => {`${console.log(x)} --`})
+//=> produces -> 1 -- 2 -- 3 --
