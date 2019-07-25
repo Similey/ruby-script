@@ -218,18 +218,40 @@ class Collection extends Array {
     //     }
     // }
 
-    zip(...lists){
-       if (typeof(lists[0]) === 'function') return null;
+    values_at(...indices) {
+        let values = [];
+        let result = new Collection([]);
+        for (let i = 0; i < indices.length; i++) {
+            if (typeof indices[i] === 'number') {
+                values.push(indices[i])
+            } else {
+                let start = indices[i][0];
+                let finish = indices[i][1];
+                while (start <= finish) {
+                    values.push(start);
+                    start++
+                }
+            }
+        }
 
-       let result = new Collection([]);
-       for(let i=0; i<this.length;i++){
-           let c = new Collection([]);
+        for (let i = 0; i < values.length; i++) {
+            values[i] < 0 ? result.push(this[this.length + values[i]]) : result.push(this[values[i]]);
+        }
+        return result;
+    }
+
+    zip(...lists) {
+        if (typeof (lists[0]) === 'function') return null;
+
+        let result = new Collection([]);
+        for (let i = 0; i < this.length; i++) {
+            let c = new Collection([]);
             c.push(this[i]);
-           for(let j=0;j<lists.length;j++){
-               c.push(lists[j][i]);
-           }
-           result.push(c);
-       }
+            for (let j = 0; j < lists.length; j++) {
+                c.push(lists[j][i]);
+            }
+            result.push(c);
+        }
         return result;
     }
 }

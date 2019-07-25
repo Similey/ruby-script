@@ -537,14 +537,43 @@ describe('ruby-script', () => {
         })
     });
 
+    describe('values_at', () => {
+        it('should return a collection containing the elements of this to the given index(s)', () => {
+            let collection = new Collection(["a", "b", "c", "d", "e", "f"]);
+            let values_at = collection.values_at(1, 3, 5);
+            expect(values_at).toEqual(["b", "d", "f"]);
+            expect(values_at.isCollection()).toEqual(true);
+        });
+
+        it('should return undefined if index is out of range', () => {
+            let collection = new Collection(["a", "b", "c", "d", "e", "f"]);
+            let values_at = collection.values_at(1, 3, 5, 7);
+            expect(values_at).toEqual(["b", "d", "f", undefined]);
+        });
+
+        it('should return return a collection containing the elements of this to the given negative index(s)', () => {
+            let collection = new Collection(["a", "b", "c", "d", "e", "f"]);
+            let values_at = collection.values_at(-1, -2, -2, -7);
+            expect(values_at).toEqual(["f", "e", "e", undefined]);
+        });
+
+        it('should return a collection containing the elements of the given range(s)', () => {
+            let collection = new Collection(["a", "b", "c", "d", "e", "f", "g"]);
+            let range = new Collection([5, 7]);
+            let values_at = collection.values_at(0, [1, 2], 4, range);
+            expect(values_at).toEqual(["a", "b", "c", "e", "f", "g", undefined]);
+
+        })
+    });
+
     describe('zip', () => {
         it('should convert any argument to Collections then merges elements of this with correcsponding elements of each argument.', () => {
-            let  collection = new Collection([1, 2, 3, 4]);
+            let collection = new Collection([1, 2, 3, 4]);
             let a = new Collection([4, 5, 6]);
             let b = [7, 8, 9];
             let zip = collection.zip(a, b);
 
-            expect(zip).toEqual([[1,4,7],[2,5,8],[3,6,9],[4,undefined,undefined]]);
+            expect(zip).toEqual([[1, 4, 7], [2, 5, 8], [3, 6, 9], [4, undefined, undefined]]);
             expect(zip.isCollection()).toEqual(true);
             expect(zip[0].isCollection()).toEqual(true);
             expect(zip[1].isCollection()).toEqual(true);
@@ -553,8 +582,11 @@ describe('ruby-script', () => {
         });
         it('should return null if function is passed as an argument', () => {
             let collection = new Collection([1, 2, 3, 4]);
-            let zip = collection.zip((a) => {return this.pop})
+            let zip = collection.zip((a) => {
+                return this.pop
+            })
             expect(zip).toBe(null);
         })
     })
+
 });

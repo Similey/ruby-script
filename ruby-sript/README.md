@@ -285,7 +285,34 @@ collection = new Collection([1, 2, 3]);
 
 collection.each((x) => {`${console.log(x)} --`})
 //=> produces -> 1 -- 2 -- 3 --
+
 ```
+
+###values_at
+Returns a _collection_ containing the elements of _this_ to the given index(s)
+
+
+````js
+collection = new Collection(["a","b","c","d","e","f"]);
+
+collection.values_at(1,3,5);
+
+//=> ["b","d","f"]
+
+collection.values_at(1,3,5,7);
+//=> ["b","d","f",undefined]
+
+
+collection.values_at(-1,-2,-2,-7);
+//=>["f","e","e",undefined]
+
+collection.values_at([0,6]);
+//=>["a","b","c","d","e","f",undefined]
+
+range = new Collection([4,6]);
+collection.values_at(0, [1,2], range);
+//=>["a","b","c","e","f",undefined]
+````
 
 ### zip
 Converts any argument to _Collections_ then merges elements of _this_ with correcsponding elements of each argument.
@@ -301,9 +328,10 @@ collection = new Collection([1,2,3,4]);
 a = new Collection(4,5,6);
 b = [7,8,9];
 
-collection.zip(a,b)
+collection.zip(a,b);
 //=> [[1,4,7],[2,5,8],[3,6,9],[4,undefined,undefined]]
 
 collection.zip((a) => {a.pop()}, a,b)
 //=> null
 ```
+
