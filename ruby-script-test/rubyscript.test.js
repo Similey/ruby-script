@@ -537,4 +537,32 @@ describe('ruby-script', () => {
             expect(each).toBe(collection);
         })
     });
+
+    describe('each_index', () => {
+        it('should loop through each element in collection passing in the index instead of element', () => {
+            let collection = new Collection([1, 2, 3]);
+            let result = 0;
+            collection.each_index((i) => {
+                return result += i
+            });
+
+            expect(result).toBe(3);
+        });
+
+        it('should return this', () => {
+            let collection = new Collection([1, 2, 3]);
+            let each = collection.each_index((i) => {
+                return i
+            });
+
+            expect(each).toBe(collection);
+        });
+
+        it('should return this if no function is passed as argument', () => {
+            let collection = new Collection([1, 2, 3]);
+            let each = collection.each_index();
+
+            expect(each).toBe(collection);
+        })
+    });
 });

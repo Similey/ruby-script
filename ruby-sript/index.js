@@ -212,6 +212,15 @@ class Collection extends Array {
         return this;
     }
 
+    each_index(callback = null) {
+        if (callback === null) return this;
+        for (let i = 0; i < this.length; i++) {
+            callback(i)
+        }
+
+        return this;
+    }
+
     // include(value){
     //     for(let i = 0; i < this.length; i++){
     //         if(this[i] === value) return true;
