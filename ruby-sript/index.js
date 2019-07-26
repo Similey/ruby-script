@@ -14,7 +14,6 @@ class Collection extends Array {
     }
 
     clear() {
-        console.log('clear method called');
         this.length = 0;
     }
 
@@ -217,6 +216,19 @@ class Collection extends Array {
     //         if(this[i] === value) return true;
     //     }
     // }
+
+    unshift(...indices){
+        let temp = new Collection([...this]);
+        this.clear();
+        //indices.length = 1
+        for(let j=0;j<indices.length;j++){
+            this.push(indices[j]);
+        }
+        for(let i=0; i< temp.length;i++){
+           this.push(temp[i]);
+        }
+      return this;
+    }
 
     values_at(...indices) {
         let values = [];

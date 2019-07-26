@@ -537,6 +537,19 @@ describe('ruby-script', () => {
         })
     });
 
+    describe('unshift', () => {
+        it('should prepends object to of this, moving other elements upwards', () => {
+            let collection = new Collection([2, 3, 4]);
+            expect(collection.unshift('a','b')).toEqual(['a', 'b', 2, 3, 4]);
+        });
+
+        it('should return this', () => {
+            let collection = new Collection([2, 3, 4]);
+            expect(collection.unshift(0, 1)).toBe(collection);
+        })
+
+    });
+
     describe('values_at', () => {
         it('should return a collection containing the elements of this to the given index(s)', () => {
             let collection = new Collection(["a", "b", "c", "d", "e", "f"]);
@@ -582,9 +595,9 @@ describe('ruby-script', () => {
         });
         it('should return null if function is passed as an argument', () => {
             let collection = new Collection([1, 2, 3, 4]);
-            let zip = collection.zip((a) => {
+            let zip = collection.zip(() => {
                 return this.pop
-            })
+            });
             expect(zip).toBe(null);
         })
     })

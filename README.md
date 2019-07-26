@@ -288,6 +288,20 @@ collection.each((x) => {`${console.log(x)} --`})
 
 ```
 
+### unshift
+Prepends object to the front of _this_, moving other elements upwards.
+```js
+collection = new Collection([1,2,3]);
+collection.unshift(0);
+//=> [0,1,2,3]
+
+collection.unshift('a','b')
+//=> ['a','b',1,2,3]
+
+```
+
+```
+
 ###values_at
 Returns a _collection_ containing the elements of _this_ to the given index(s)
 
