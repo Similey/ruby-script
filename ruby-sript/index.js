@@ -9,7 +9,7 @@ class Collection extends Array {
         Object.assign(this, array);
     }
 
-    static isCollection() {
+    isCollection() {
         return true;
     }
 
@@ -233,6 +233,10 @@ class Collection extends Array {
     //         if(this[i] === value) return true;
     //     }
     // }
+
+    empty(){
+        return this.length === 0;
+    }
 }
 
 module.exports = Collection;

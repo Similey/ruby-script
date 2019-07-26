@@ -593,4 +593,20 @@ describe('ruby-script', () => {
             expect(each).toBe(collection);
         })
     });
+
+    describe('empty', () => {
+        it('should return true if collection has no elements', () => {
+            let collection = new Collection([]);
+            let empty = collection.empty();
+
+            expect(empty).toBe(true);
+        });
+
+        it('should return false if collection HAS elements', () => {
+           let collection = new Collection([1]);
+           let empty = collection.empty();
+
+           expect(empty).toBe(false);
+        })
+    })
 });

@@ -311,5 +311,18 @@ collection.each_with_index((x, i) => {`${console.log(x)} ${i} --`})
 //=> produces -> a 0 -- b 1 -- c 2
 ```
 
+### empty
+Returns true if _this_ contains no elements.
+
+```js
+collection = new Collection(['a', 'b', 'c']);
+collection.empty();
+//=> false
+
+emptyCollection = new Collection([]);
+emptyCollection.empty();
+//=> true
+```
+
 
 
