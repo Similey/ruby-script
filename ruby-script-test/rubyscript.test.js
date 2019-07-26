@@ -386,11 +386,11 @@ describe('ruby-script', () => {
             //    I don't know how to test this
         });
 
-        it('should return unalterd array if no block is provided', () => {
+        it('should return unaltered array if no block is provided', () => {
             let collection = new Collection([1, 2, 3, 4, 5]);
             let result = new Collection([1, 2, 3, 4, 5]);
 
-            collection.delete_if((x) => {
+            collection.delete_if(() => {
                 return this.length === 1
             });
 
@@ -537,10 +537,115 @@ describe('ruby-script', () => {
         })
     });
 
+    describe('each_index', () => {
+        it('should loop through each element in collection passing in the index instead of element', () => {
+            let collection = new Collection([1, 2, 3]);
+            let result = 0;
+            collection.each_index((i) => {
+                return result += i
+            });
+
+            expect(result).toBe(3);
+        });
+
+        it('should return this', () => {
+            let collection = new Collection([1, 2, 3]);
+            let each = collection.each_index((i) => {
+                return i
+            });
+
+            expect(each).toBe(collection);
+        });
+
+        it('should return this if no function is passed as argument', () => {
+            let collection = new Collection([1, 2, 3]);
+            let each = collection.each_index();
+
+            expect(each).toBe(collection);
+        })
+    });
+
+    describe('each_with_index', () => {
+        it('should loop through each element in collection passing in the element and index', () => {
+            let collection = new Collection([1, 2, 3]);
+            let result = 0;
+            collection.each_with_index((x, i) => {
+                return result += (x + i)
+            });
+
+            expect(result).toBe(9);
+        });
+
+        it('should return this', () => {
+            let collection = new Collection([1, 2, 3]);
+            let each = collection.each_with_index((i) => {
+                return i
+            });
+
+            expect(each).toBe(collection);
+        });
+
+        it('should return this if no function is passed as argument', () => {
+            let collection = new Collection([1, 2, 3]);
+            let each = collection.each_with_index();
+
+            expect(each).toBe(collection);
+        })
+    });
+
+    describe('empty', () => {
+        it('should return true if collection has no elements', () => {
+            let collection = new Collection([]);
+            let empty = collection.empty();
+
+            expect(empty).toBe(true);
+        });
+
+        it('should return false if collection HAS elements', () => {
+            let collection = new Collection([1]);
+            let empty = collection.empty();
+
+            expect(empty).toBe(false);
+        })
+    });
+
+    describe('eql', () => {
+        it('should return true if collections have the same values', () => {
+            let collection = new Collection([1, 2, 3]);
+            let eql = collection.eql(new Collection([1, 2, 3]));
+
+            expect(eql).toBe(true);
+        });
+
+        it('should return true if collection and array have the same values', () => {
+            let collection = new Collection([1, 2, 3]);
+            let eql = collection.eql([1, 2, 3]);
+
+            expect(eql).toBe(true);
+        });
+
+        it('should return false if collections are NOT the same object', () => {
+            let collection = new Collection([1, 2, 3]);
+            let eql = collection.eql({});
+
+            expect(eql).toBe(false);
+        });
+
+        it('should return false if collections do NOT have the same values', () => {
+            let collection = new Collection([1, 2, 3]);
+            let collection2 = new Collection([1, 2]);
+            let eql = collection.eql([1, 2]);
+            let eql2 = collection2.eql([1, 2, 3]);
+
+            expect(eql).toBe(false);
+            expect(eql2).toBe(false);
+        });
+    });
+
     describe('unshift', () => {
         it('should prepends object to of this, moving other elements upwards', () => {
             let collection = new Collection([2, 3, 4]);
-            expect(collection.unshift('a','b')).toEqual(['a', 'b', 2, 3, 4]);
+            expect(collection.unshift('a', 'b')).toEqual(['a', 'b', 2, 3, 4]);
         });
 
         it('should return this', () => {
@@ -601,5 +706,4 @@ describe('ruby-script', () => {
             expect(zip).toBe(null);
         })
     })
-
 });

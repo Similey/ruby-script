@@ -288,6 +288,58 @@ collection.each((x) => {`${console.log(x)} --`})
 
 ```
 
+### each_index
+Same as _.each_, but passes the _index_ of the element instead of the element itself.
+
+If no block is given, returns _this_.
+```js
+collection = new Collection([1, 2, 3]);
+
+collection.each((x) => {`${console.log(x)} --`})
+//=> produces -> 0 -- 1 -- 2 --
+```
+
+### each_with_index
+Calls _callback_ with _two_ arguments, the element and its index, for each item in _Collection_.
+Given arguments are passed through to _.each_.
+
+If no callback is given, returns _this_
+
+```js
+collection = new Collection(['a', 'b', 'c']);
+
+collection.each_with_index((x, i) => {`${console.log(x)} ${i} --`})
+//=> produces -> a 0 -- b 1 -- c 2
+```
+
+### empty
+Returns true if _this_ contains no elements.
+
+```js
+collection = new Collection(['a', 'b', 'c']);
+collection.empty();
+//=> false
+
+emptyCollection = new Collection([]);
+emptyCollection.empty();
+//=> true
+```
+
+### eql
+Returns true if _this_ and _other_ are are both collections, or _other_ is an array, with the same content.
+
+```js
+collection = new Collection([1,2,3]);
+
+collection.equal(new Collection([1,2,3]));
+//=> true
+
+collection.equal([1,2,3]);
+//=> true
+
+collection.equal([1,2]);
+//=> false
+```
 
 ### unshift
 Prepends object to the front of _this_, moving other elements upwards.
@@ -303,7 +355,6 @@ collection.unshift('a','b')
 
 ###values_at
 Returns a _collection_ containing the elements of _this_ to the given index(s)
-
 
 ````js
 collection = new Collection(["a","b","c","d","e","f"]);
@@ -347,4 +398,3 @@ collection.zip(a,b);
 collection.zip((a) => {a.pop()}, a,b)
 //=> null
 ```
-

@@ -211,23 +211,54 @@ class Collection extends Array {
         return this;
     }
 
+    each_index(callback = null) {
+        if (callback === null) return this;
+        for (let i = 0; i < this.length; i++) {
+            callback(i)
+        }
+        return this;
+    }
+
+    each_with_index(callback = null) {
+        if (callback === null) return this;
+
+        for (let i = 0; i < this.length; i++) {
+            callback(this[i], i)
+        }
+        return this;
+    }
+
+    empty() {
+        return this.length === 0;
+    }
+
+    eql(value) {
+        let result = true;
+        if (this == value) result = false;
+        if (this.length !== value.length) result = false;
+        for (let i = 0; i < this.length; i++) {
+            if (this[i] !== value[i]) result = false
+        }
+        return result;
+    }
+
     // include(value){
     //     for(let i = 0; i < this.length; i++){
     //         if(this[i] === value) return true;
     //     }
     // }
 
-    unshift(...indices){
+    unshift(...indices) {
         let temp = new Collection([...this]);
         this.clear();
         //indices.length = 1
-        for(let j=0;j<indices.length;j++){
+        for (let j = 0; j < indices.length; j++) {
             this.push(indices[j]);
         }
-        for(let i=0; i< temp.length;i++){
-           this.push(temp[i]);
+        for (let i = 0; i < temp.length; i++) {
+            this.push(temp[i]);
         }
-      return this;
+        return this;
     }
 
     values_at(...indices) {
