@@ -387,11 +387,11 @@ describe('ruby-script', () => {
             //    I don't know how to test this
         });
 
-        it('should return unalterd array if no block is provided', () => {
+        it('should return unaltered array if no block is provided', () => {
             let collection = new Collection([1, 2, 3, 4, 5]);
             let result = new Collection([1, 2, 3, 4, 5]);
 
-            collection.delete_if((x) => {
+            collection.delete_if(() => {
                 return this.length === 1
             });
 
@@ -561,6 +561,34 @@ describe('ruby-script', () => {
         it('should return this if no function is passed as argument', () => {
             let collection = new Collection([1, 2, 3]);
             let each = collection.each_index();
+
+            expect(each).toBe(collection);
+        })
+    });
+
+    describe('each_with_index', () => {
+        it('should loop through each element in collection passing in the element and index', () => {
+            let collection = new Collection([1, 2, 3]);
+            let result = 0;
+            collection.each_with_index((x, i) => {
+                return result += (x + i)
+            });
+
+            expect(result).toBe(9);
+        });
+
+        it('should return this', () => {
+            let collection = new Collection([1, 2, 3]);
+            let each = collection.each_with_index((i) => {
+                return i
+            });
+
+            expect(each).toBe(collection);
+        });
+
+        it('should return this if no function is passed as argument', () => {
+            let collection = new Collection([1, 2, 3]);
+            let each = collection.each_with_index();
 
             expect(each).toBe(collection);
         })

@@ -287,12 +287,29 @@ collection.each((x) => {`${console.log(x)} --`})
 //=> produces -> 1 -- 2 -- 3 --
 ```
 
-### each
+### each_index
 Same as _.each_, but passes the _index_ of the element instead of the element itself.
 
-If no block is given, returns the _Collection_ itself.
+If no block is given, returns _this_.
 ```js
 collection = new Collection([1, 2, 3]);
 
 collection.each((x) => {`${console.log(x)} --`})
 //=> produces -> 0 -- 1 -- 2 --
+```
+
+### each_with_index
+Calls _callback_ with _two_ arguments, the element and its index, for each item in _Collection_.
+Given arguments are passed through to _.each_.
+
+If no callback is given, returns _this_
+
+```js
+collection = new Collection(['a', 'b', 'c']);
+
+collection.each_with_index((x, i) => {`${console.log(x)} ${i} --`})
+//=> produces -> a 0 -- b 1 -- c 2
+```
+
+
+

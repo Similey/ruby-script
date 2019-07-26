@@ -285,3 +285,14 @@ collection = new Collection([1, 2, 3]);
 
 collection.each((x) => {`${console.log(x)} --`})
 //=> produces -> 1 -- 2 -- 3 --
+```
+
+### each_index
+Same as _.each_, but passes the _index_ of the element instead of the element itself.
+
+If no block is given, returns the _Collection_ itself.
+```js
+collection = new Collection([1, 2, 3]);
+
+collection.each((x) => {`${console.log(x)} --`})
+//=> produces -> 0 -- 1 -- 2 --

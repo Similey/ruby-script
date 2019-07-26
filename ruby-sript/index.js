@@ -9,7 +9,7 @@ class Collection extends Array {
         Object.assign(this, array);
     }
 
-    isCollection() {
+    static isCollection() {
         return true;
     }
 
@@ -208,7 +208,6 @@ class Collection extends Array {
         for (let i = 0; i < this.length; i++) {
             callback(this[i])
         }
-
         return this;
     }
 
@@ -217,7 +216,15 @@ class Collection extends Array {
         for (let i = 0; i < this.length; i++) {
             callback(i)
         }
+        return this;
+    }
 
+    each_with_index(callback = null) {
+        if (callback === null) return this;
+
+        for (let i = 0; i < this.length; i++) {
+            callback(this[i], i)
+        }
         return this;
     }
 
