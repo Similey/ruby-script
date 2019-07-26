@@ -323,6 +323,3 @@ emptyCollection = new Collection([]);
 emptyCollection.empty();
 //=> true
 ```
-
-
-
