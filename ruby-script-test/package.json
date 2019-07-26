@@ -7,6 +7,6 @@
   "license": "MIT",
   "dependencies": {
     "jest": "^24.8.0",
-    "ruby-script": "^1.0.3"
+    "ruby-script": "^1.0.6"
   }
 }
