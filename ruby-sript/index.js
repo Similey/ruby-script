@@ -234,8 +234,18 @@ class Collection extends Array {
     //     }
     // }
 
-    empty(){
+    empty() {
         return this.length === 0;
+    }
+
+    eql(value) {
+        let result = true;
+        if (this == value) result = false;
+        if (this.length !== value.length) result = false;
+        for (let i = 0; i < this.length; i++) {
+            if (this[i] !== value[i]) result = false
+        }
+        return result;
     }
 }
 

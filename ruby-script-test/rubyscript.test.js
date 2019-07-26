@@ -603,10 +603,43 @@ describe('ruby-script', () => {
         });
 
         it('should return false if collection HAS elements', () => {
-           let collection = new Collection([1]);
-           let empty = collection.empty();
+            let collection = new Collection([1]);
+            let empty = collection.empty();
 
-           expect(empty).toBe(false);
+            expect(empty).toBe(false);
         })
+    });
+
+    describe('eql', () => {
+        it('should return true if collections have the same values', () => {
+            let collection = new Collection([1, 2, 3]);
+            let eql = collection.eql(new Collection([1, 2, 3]));
+
+            expect(eql).toBe(true);
+        });
+
+        it('should return true if collection and array have the same values', () => {
+            let collection = new Collection([1, 2, 3]);
+            let eql = collection.eql([1, 2, 3]);
+
+            expect(eql).toBe(true);
+        });
+
+        it('should return false if collections are NOT the same object', () => {
+            let collection = new Collection([1, 2, 3]);
+            let eql = collection.eql({});
+
+            expect(eql).toBe(false);
+        });
+
+        it('should return false if collections do NOT have the same values', () => {
+            let collection = new Collection([1, 2, 3]);
+            let collection2 = new Collection([1, 2]);
+            let eql = collection.eql([1, 2]);
+            let eql2 = collection2.eql([1, 2, 3]);
+
+            expect(eql).toBe(false);
+            expect(eql2).toBe(false);
+        });
     })
 });

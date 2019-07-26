@@ -323,3 +323,19 @@ emptyCollection = new Collection([]);
 emptyCollection.empty();
 //=> true
 ```
+
+### eql
+Returns true if _this_ and _other_ are are both collections, or _other_ is an array, with the same content.
+
+```js
+collection = new Collection([1,2,3]);
+
+collection.equal(new Collection([1,2,3]));
+//=> true
+
+collection.equal([1,2,3]);
+//=> true
+
+collection.equal([1,2]);
+//=> false
+```
