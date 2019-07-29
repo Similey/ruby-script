@@ -25,7 +25,7 @@ collection.collect((n) => {return n+1})
 ### Collection
 
 ### isCollection
- Removes all elements of _this_.
+ Returns _true_ for _collections_.
  
 ```js
 let collection = new Collection([1,2,3,4]);
