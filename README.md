@@ -339,3 +339,28 @@ collection.equal([1,2,3]);
 collection.equal([1,2]);
 //=> false
 ```
+
+### fetch
+Tries to return the element at position _index_, but throws an exception if the referenced index lies outside of the array
+bounds. This error can be prevented by supplying a second argument, which will act as a default value.
+
+Alternatively, if a _callback_ is given it will only be executed when an invalid index is referenced.
+
+Negative values of _index_ count from the end of the array.
+
+```js
+collection = new Collection([1,2,3,4]);
+
+collection.fetch(1);
+//=> 2
+
+collection.fetch(-1);
+//=> 4
+
+collection.fetch(4, 'cat');
+//=> cat
+
+collection.fetch(100, (i) => {`${i} is out of bounds`});
+//=> produces -> "100 is out of bounds"
+
+```

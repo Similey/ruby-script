@@ -641,5 +641,51 @@ describe('ruby-script', () => {
             expect(eql).toBe(false);
             expect(eql2).toBe(false);
         });
+    });
+
+    describe('fetch', () => {
+        it('should return value at index provided', () => {
+            let collection = new Collection([1, 2, 3, 4]);
+            let fetch = collection.fetch(1);
+
+            expect(fetch).toEqual(2);
+        });
+
+        it('should return value at negative index provided', () => {
+            let collection = new Collection([1, 2, 3, 4]);
+            let fetch = collection.fetch(-1);
+
+            expect(fetch).toEqual(4);
+        });
+
+        it('should return default value when provided index is out of bounds', () => {
+            let collection = new Collection([1, 2, 3, 4]);
+            let fetch = collection.fetch(4, 'cat');
+
+            expect(fetch).toEqual('cat');
+        });
+
+        it('should NOT return default value when provided index is NOT out of bounds', () => {
+            let collection = new Collection([1, 2, 3, 4]);
+            let fetch = collection.fetch(3, 'cat');
+
+            expect(fetch).toEqual(4);
+        });
+
+        it('should call callback when provided index is out of bounds', () => {
+            let collection = new Collection([1, 2, 3, 4]);
+            let fetch = '';
+            collection.fetch(100, (i) => {fetch = `${i} is out of bounds`});
+
+            expect(fetch).toEqual('100 is out of bounds');
+        });
+
+        it('should NOT call callback when provided index is NOT out of bounds', () => {
+            let collection = new Collection([1, 2, 3, 4]);
+            let fetch = '';
+            collection.fetch(3, (i) => {fetch = `${i} is out of bounds`});
+
+            expect(fetch).toEqual('');
+        });
     })
 });

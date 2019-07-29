@@ -240,12 +240,30 @@ class Collection extends Array {
 
     eql(value) {
         let result = true;
-        if (this == value) result = false;
+        if (this === value) result = false;
         if (this.length !== value.length) result = false;
         for (let i = 0; i < this.length; i++) {
             if (this[i] !== value[i]) result = false
         }
         return result;
+    }
+
+    fetch(index, opt = null) {
+        let i = index;
+        if (i < 0) {
+            i = this.length + index;
+        }
+
+        if (i >= this.length) {
+            if (opt === null) {
+                throw `${i} is out of bounds`;
+            } else if (typeof (opt) === 'function') {
+                opt(i);
+            } else {
+                return opt;
+            }
+        }
+        return this[i]
     }
 }
 
