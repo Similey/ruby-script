@@ -769,5 +769,35 @@ describe('ruby-script', () => {
 
             expect(collection).toEqual(expected);
         })
+    });
+
+    describe('find_index', () => {
+        it('should return index for element matching the provided value', () => {
+            let collection = new Collection([1, 2, 3, 4]);
+            let find_index = collection.find_index(2);
+
+            expect(find_index).toEqual(1);
+        });
+
+        it('should return null the index when no element matches the provided value', () => {
+            let collection = new Collection([1, 2, 3, 4]);
+            let find_index = collection.find_index(5);
+
+            expect(find_index).toEqual(null);
+        });
+
+        it('should return index for the first element for which the block returns true', () => {
+            let collection = new Collection([1, 2, 3, 4]);
+            let find_index = collection.find_index((e) => {return e === 3});
+
+            expect(find_index).toEqual(2);
+        });
+
+        it('should return this if no arguments are provided', () => {
+            let collection = new Collection([1, 2, 3, 4]);
+            let find_index = collection.find_index();
+
+            expect(find_index).toEqual(collection);
+        });
     })
 });

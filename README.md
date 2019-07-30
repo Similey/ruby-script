@@ -1,7 +1,7 @@
 # ruby-script
 Creating a Ruby-Array like class called Collection
 
-## GitHubRepo
+## GitHub Repo
 Feel free to contribute or log issues!
 
 https://github.com/Jonny-B/ruby-script
@@ -397,6 +397,30 @@ collection.fill('x', [0,2]);
 collection.fill((i) => {return i*i});
 //=> [0, 1, 4, 9]
 
-collection.fill(-2, (i) => {return `x${i}`})
+collection.fill(-2, (i) => {return `x${i}`});
 //=> [1, 2, 'x2', 'x3']
+```
+
+### find_index
+Returns the _index_ of the first object in _collection_ such that the element is === to the _value_ provided.
+
+If a block is given instead of a value, returns the _index_ of the first element for which the block returns _true_.
+Returns _null_ if no match is found.
+
+See also .rindex.
+
+_This_ is returned if neither a block nor a value is given.
+
+```js
+collection = new Collection([1,2,3,4]);
+
+collection.find_index(2);
+//=> 1
+
+collection.find_index(5);
+//=> null
+
+collection.find_index((e) => {return e === 3});
+//=> 2
+
 ```

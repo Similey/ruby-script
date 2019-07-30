@@ -268,7 +268,7 @@ class Collection extends Array {
 
     fill(value, start = 0, finish = this.length) {
         // handle when .fill(range, callback) syntax is used
-        if (typeof (value) === 'number' && typeof (start) === 'function'){
+        if (typeof (value) === 'number' && typeof (start) === 'function') {
             let s = start;
             let v = value;
             value = s;
@@ -287,15 +287,27 @@ class Collection extends Array {
 
         for (let i = 0; i < this.length; i++) {
             if (i >= start && i <= finish) {
-                if(typeof(value) !== 'function'){
+                if (typeof (value) !== 'function') {
                     this[i] = value;
-                }
-                else{
+                } else {
                     this[i] = value(i);
                 }
             }
         }
         return value;
+    }
+
+    find_index(value) {
+        if (value === undefined) return this;
+        for (let i = 0; i < this.length; i++) {
+            if (typeof value === 'function') {
+                if (value(this[i])) return i;
+            } else {
+                if (this[i] === value) return i;
+            }
+        }
+
+        return null
     }
 }
 
