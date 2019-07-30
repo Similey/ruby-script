@@ -265,6 +265,38 @@ class Collection extends Array {
         }
         return this[i]
     }
+
+    fill(value, start = 0, finish = this.length) {
+        // handle when .fill(range, callback) syntax is used
+        if (typeof (value) === 'number' && typeof (start) === 'function'){
+            let s = start;
+            let v = value;
+            value = s;
+            start = v;
+        }
+
+        if (typeof (start) !== 'number' && typeof (start) !== 'function') {
+            // when a range is passed in
+            finish = start[1];
+            start = start[0];
+        } else {
+            start = start < 0 ? this.length + start : start;
+        }
+
+        if (finish < 0) return;
+
+        for (let i = 0; i < this.length; i++) {
+            if (i >= start && i <= finish) {
+                if(typeof(value) !== 'function'){
+                    this[i] = value;
+                }
+                else{
+                    this[i] = value(i);
+                }
+            }
+        }
+        return value;
+    }
 }
 
 module.exports = Collection;

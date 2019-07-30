@@ -675,7 +675,9 @@ describe('ruby-script', () => {
         it('should call callback when provided index is out of bounds', () => {
             let collection = new Collection([1, 2, 3, 4]);
             let fetch = '';
-            collection.fetch(100, (i) => {fetch = `${i} is out of bounds`});
+            collection.fetch(100, (i) => {
+                fetch = `${i} is out of bounds`
+            });
 
             expect(fetch).toEqual('100 is out of bounds');
         });
@@ -683,9 +685,89 @@ describe('ruby-script', () => {
         it('should NOT call callback when provided index is NOT out of bounds', () => {
             let collection = new Collection([1, 2, 3, 4]);
             let fetch = '';
-            collection.fetch(3, (i) => {fetch = `${i} is out of bounds`});
+            collection.fetch(3, (i) => {
+                fetch = `${i} is out of bounds`
+            });
 
             expect(fetch).toEqual('');
         });
+    });
+
+    describe('fill', () => {
+        it('should fill the existing collection with new values', () => {
+            let collection = new Collection([1, 2, 3, 4]);
+            let expected = new Collection(['x', 'x', 'x', 'x']);
+            collection.fill('x');
+
+            expect(collection).toEqual(expected);
+        });
+
+        it('should fill the existing collection with new values starting at the given index position', () => {
+            let collection = new Collection([1, 2, 3, 4]);
+            let expected = new Collection([1, 2, 'x', 'x']);
+            collection.fill('x', 2);
+
+            expect(collection).toEqual(expected);
+        });
+
+        it('should fill the existing collection with new values starting at the given negatove index position', () => {
+            let collection = new Collection([1, 2, 3, 4]);
+            let expected = new Collection([1, 'x', 'x', 'x']);
+            collection.fill('x', -3);
+
+            expect(collection).toEqual(expected);
+        });
+
+        it('should fill the existing collection with new values starting at the given index position and up to the given length', () => {
+            let collection = new Collection([1, 2, 3, 4]);
+            let expected = new Collection([1, 'x', 'x', 4]);
+            collection.fill('x', 1, 2);
+
+            expect(collection).toEqual(expected);
+        });
+
+        it('should fill the existing collection with new values using the given start/end range', () => {
+            let collection = new Collection([1, 2, 3, 4]);
+            let expected = new Collection(['x', 'x', 'x', 4]);
+            collection.fill('x', [0, 2]);
+
+            expect(collection).toEqual(expected);
+        });
+
+        it('should fill the existing collection with the resulting values of the provided callback function', () => {
+            let collection = new Collection([1, 2, 3, 4]);
+            let expected = new Collection([0, 1, 4, 9]);
+            collection.fill((i) => {
+                return i * i
+            });
+
+            expect(collection).toEqual(expected);
+        });
+
+        it('should fill the existing collection with the resulting values of the provided callback function', () => {
+            let collection = new Collection([1, 2, 3, 4]);
+            let expected = new Collection([1, 2, 'x2', 'x3']);
+            collection.fill(-2, (i) => {
+                return `x${i}`
+            });
+
+            expect(collection).toEqual(expected);
+        });
+
+        it('should do nothing if finish value is negative', () => {
+            let collection = new Collection([1, 2, 3, 4]);
+            let expected = new Collection([1, 2, 3, 4]);
+            collection.fill('x', 1, -1);
+
+            expect(collection).toEqual(expected);
+        });
+
+        it('should do nothing if finish value in range is negative', () => {
+            let collection = new Collection([1, 2, 3, 4]);
+            let expected = new Collection([1, 2, 3, 4]);
+            collection.fill('x', [1, -1]);
+
+            expect(collection).toEqual(expected);
+        })
     })
 });

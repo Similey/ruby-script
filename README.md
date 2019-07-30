@@ -364,3 +364,39 @@ collection.fetch(100, (i) => {`${i} is out of bounds`});
 //=> produces -> "100 is out of bounds"
 
 ```
+
+### fill
+The first three forms set the selected elements of _this_ (which may be the entire _collection_) to the provided value.
+
+A start of _null_ is equivalent to zero.
+
+A length of _null_ is equivalent to the length of the array.
+
+The last three forms fill the _collection_ with the value of the given block, which is passed the absolute index of each element to be filled.
+
+Negative values of _start_ count from the end of the _collection_, where _-1_ is the last element.
+
+```js
+collection = new Collection([1,2,3,4]);
+
+collection.fill('x');
+//=> ['x', 'x', 'x', 'x']
+
+collection.fill('x', 2); 
+//=> [1,2,'x','x']
+
+collection.fill('x', -3); 
+//=> [1,'x','x','x']
+
+collection.fill('x', 1, 2);
+//=> [1,'x','x',4]
+
+collection.fill('x', [0,2]);
+//=> ['x', 'x', x, 4]
+
+collection.fill((i) => {return i*i});
+//=> [0, 1, 4, 9]
+
+collection.fill(-2, (i) => {return `x${i}`})
+//=> [1, 2, 'x2', 'x3']
+```
