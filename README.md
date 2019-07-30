@@ -424,3 +424,25 @@ collection.find_index((e) => {return e === 3});
 //=> 2
 
 ```
+
+### first
+Returns the first element, or the first n elements, of the _collection_. If the collection is empty, the first form returns
+_undefined_ and the second form returns an empty _collection_. See also .last for the opposite effect.
+
+```js
+collection = new Collection([1,2,3,4]);
+
+collection.first();
+//=> 1
+
+collection.first(2);
+//=> [1,2]
+
+collection2 = new Collection([]);
+
+collection2.first();
+//=> undefined
+
+collection2.first(2);
+//=> []
+```

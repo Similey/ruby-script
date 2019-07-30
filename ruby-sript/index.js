@@ -250,6 +250,7 @@ class Collection extends Array {
 
     fetch(index, opt = null) {
         let i = index;
+        //Handling negative integers
         if (i < 0) {
             i = this.length + index;
         }
@@ -309,6 +310,20 @@ class Collection extends Array {
 
         return null
     }
+
+    first(value=null){
+        if(value===null){
+            return this[0];
+        }
+        else{
+            let result = new Collection([]);
+            for (let i = 0; i < value; i++){
+                result.push(this[i])
+            }
+            return result.compact();
+        }
+    }
+
 }
 
 module.exports = Collection;

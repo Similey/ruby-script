@@ -799,5 +799,37 @@ describe('ruby-script', () => {
 
             expect(find_index).toEqual(collection);
         });
+    });
+
+    describe('first', () => {
+        it('should return first element in collection', () => {
+            let collection = new Collection([1, 2, 3, 4]);
+            let first = collection.first();
+
+            expect(first).toEqual(1);
+        });
+
+        it('should return the first n elements of collection as a new collection', () => {
+            let collection = new Collection([1, 2, 3, 4]);
+            let first = collection.first(2);
+
+            expect(first).toEqual([1,2]);
+            expect(first.isCollection()).toBe(true)
+        });
+
+        it('should return undefined if collection is empty', () => {
+            let collection = new Collection([]);
+            let first = collection.first();
+
+            expect(first).toEqual(undefined);
+        });
+
+        it('should return empty collection if collection is empty and an argument is provided', () => {
+            let collection = new Collection([]);
+            let first = collection.first(2);
+
+            expect(first).toEqual([]);
+            expect(first.isCollection()).toBe(true)
+        });
     })
 });
