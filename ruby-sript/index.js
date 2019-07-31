@@ -311,19 +311,33 @@ class Collection extends Array {
         return null
     }
 
-    first(value=null){
-        if(value===null){
+    first(value = null) {
+        if (value === null) {
             return this[0];
-        }
-        else{
+        } else {
             let result = new Collection([]);
-            for (let i = 0; i < value; i++){
+            for (let i = 0; i < value; i++) {
                 result.push(this[i])
             }
             return result.compact();
         }
     }
 
+    flatten(stop = -1, result = new Collection([]), count=0) {
+        for (let i = 0; i < this.length; i++) {
+            if (Array.isArray(this[i])) {
+                let recurse = new Collection(this[i]);
+                if (count === stop) {
+                    result.push(this[i]);
+                    break
+                }
+                recurse.flatten(stop, result, count + 1)
+            } else (
+                result.push(this[i])
+            );
+        }
+        return result
+    }
 }
 
 module.exports = Collection;

@@ -446,3 +446,20 @@ collection2.first();
 collection2.first(2);
 //=> []
 ```
+
+### flatten
+Returns a new _collection_ that is a one-dimensional flattening of _this_ (recursively).
+
+That is, for every element that is an array, extract its elements into the new array.
+
+The optional level argument determines the level of recursion to flatten
+
+```js
+collection = new Collection([1, [2, 3, 4], [5,[6]]]);
+
+collection.flatten();
+//=> [1,2,3,4,5,6]
+
+collection.flatten(1);
+//=> [1,2,3,4,5,[6]]
+```

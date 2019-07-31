@@ -788,7 +788,9 @@ describe('ruby-script', () => {
 
         it('should return index for the first element for which the block returns true', () => {
             let collection = new Collection([1, 2, 3, 4]);
-            let find_index = collection.find_index((e) => {return e === 3});
+            let find_index = collection.find_index((e) => {
+                return e === 3
+            });
 
             expect(find_index).toEqual(2);
         });
@@ -813,7 +815,7 @@ describe('ruby-script', () => {
             let collection = new Collection([1, 2, 3, 4]);
             let first = collection.first(2);
 
-            expect(first).toEqual([1,2]);
+            expect(first).toEqual([1, 2]);
             expect(first.isCollection()).toBe(true)
         });
 
@@ -830,6 +832,54 @@ describe('ruby-script', () => {
 
             expect(first).toEqual([]);
             expect(first.isCollection()).toBe(true)
+        });
+    });
+
+    describe('flatten', () => {
+        it('should flatten as a single dimensional collection', () => {
+            let collection = new Collection([1, [2, 3, 4], [5, [6]]]);
+            let flatten = collection.flatten();
+
+            expect(flatten).toEqual([1, 2, 3, 4, 5, 6]);
+        });
+
+        it('should return a collection', () => {
+            let collection = new Collection([1, [2, 3, 4], [5, [6]]]);
+            let flatten = collection.flatten();
+
+            expect(flatten.isCollection()).toBe(true);
+        });
+
+        it('should flattened only one dimension deep when 1 is provided', () => {
+            let collection = new Collection([1, [2, 3, [4]], [5, [6]]]);
+            let result = new Collection([1, 2, 3, [4], 5, [6]]);
+            let flatten = collection.flatten(1);
+
+            expect(flatten).toEqual(result);
+        });
+
+        it('should flattened only two dimensions deep when 2 is provided', () => {
+            let collection = new Collection([1, [2, 3, 4], [5, [6, [7]]]]);
+            let result = new Collection([1, 2, 3, 4, 5, 6, [7]]);
+            let flatten = collection.flatten(2);
+
+            expect(flatten).toEqual(result);
+        });
+
+        it('should flatten completely if argument greater than depth is provided', () => {
+            let collection = new Collection([1, [2, 3, 4], [5, [6]]]);
+            let flatten = collection.flatten();
+
+            expect(flatten).toEqual([1, 2, 3, 4, 5, 6]);
+        });
+
+        it('should flatten a mixture of arrays and collections', () => {
+            let collection = new Collection([1, [2, 3, 4], [5, [6]]]);
+            let collection2 = new Collection([[7,8]]);
+            collection.push(collection2);
+            let flatten = collection.flatten();
+
+            expect(flatten).toEqual([1, 2, 3, 4, 5, 6,7,8]);
         });
     })
 });
