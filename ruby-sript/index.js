@@ -1,6 +1,10 @@
 // import * as helpers from './helpers'
 
-class Collection extends Array {
+const Collection = (array) => {
+    return new Collect(array);
+};
+
+class Collect extends Array {
     constructor(array) {
         // call the constructor of the Array class
         super(array.length);
@@ -30,7 +34,7 @@ class Collection extends Array {
     }
 
     combination(int) {
-        let allArray = new Collection([]);
+        let allArray = new Collect([]);
 
         let combos = (array, iterations, pushBack, startIndex = 0, exitIndex = iterations) => {
             // pushBack stack
@@ -45,13 +49,13 @@ class Collection extends Array {
             }
         };
 
-        let pushBack = new Collection([]);
+        let pushBack = new Collect([]);
         combos(this, int, pushBack);
         return allArray
     }
 
     compact() {
-        let compactArray = new Collection([]);
+        let compactArray = new Collect([]);
         for (let i = 0; i < this.length; i++) {
             if (this[i] !== null && this[i] !== undefined) {
                 compactArray.push(this[i])
@@ -108,7 +112,7 @@ class Collection extends Array {
 
     cycle(int, callback = null) {
         if (int < 0 || this.length === 0) return null;
-        let result = new Collection([]);
+        let result = new Collect([]);
         for (let i = 0; i < int; i++) {
             for (let j = 0; j < this.length; j++) {
                 if (callback === null) {
@@ -170,8 +174,8 @@ class Collection extends Array {
         let indexes = indices.splice(indices[0]);
 
         try {
-            // create a new collection that has been dug out of 'this'
-            let collection = new Collection(digValue);
+            // create a Collection that has been dug out of 'this'
+            let collection = new Collect(digValue);
 
             return collection.dig(...indexes);
         } catch (err) {
@@ -234,12 +238,127 @@ class Collection extends Array {
 
     eql(value) {
         let result = true;
-        if (this == value) result = false;
+        if (this === value) result = false;
         if (this.length !== value.length) result = false;
         for (let i = 0; i < this.length; i++) {
             if (this[i] !== value[i]) result = false
         }
         return result;
+    }
+
+    fetch(index, opt = null) {
+        let i = index;
+        //Handling negative integers
+        if (i < 0) {
+            i = this.length + index;
+        }
+
+        if (i >= this.length) {
+            if (opt === null) {
+                throw `${i} is out of bounds`;
+            } else if (typeof (opt) === 'function') {
+                opt(i);
+            } else {
+                return opt;
+            }
+        }
+        return this[i]
+    }
+
+    fill(value, start = 0, finish = this.length) {
+        // handle when .fill(range, callback) syntax is used
+        if (typeof (value) === 'number' && typeof (start) === 'function') {
+            let s = start;
+            let v = value;
+            value = s;
+            start = v;
+        }
+
+        if (typeof (start) !== 'number' && typeof (start) !== 'function') {
+            // when a range is passed in
+            finish = start[1];
+            start = start[0];
+        } else {
+            start = start < 0 ? this.length + start : start;
+        }
+
+        if (finish < 0) return;
+
+        for (let i = 0; i < this.length; i++) {
+            if (i >= start && i <= finish) {
+                if (typeof (value) !== 'function') {
+                    this[i] = value;
+                } else {
+                    this[i] = value(i);
+                }
+            }
+        }
+        return value;
+    }
+
+    find_index(value) {
+        if (value === undefined) return this;
+        for (let i = 0; i < this.length; i++) {
+            if (typeof value === 'function') {
+                if (value(this[i])) return i;
+            } else {
+                if (this[i] === value) return i;
+            }
+        }
+
+        return null
+    }
+
+    first(value = null) {
+        if (value === null) {
+            return this[0];
+        } else {
+            let result = new Collect([]);
+            for (let i = 0; i < value; i++) {
+                result.push(this[i])
+            }
+            return result.compact();
+        }
+    }
+
+    flatten(stop = -1, result = new Collect([]), count = 0) {
+        for (let i = 0; i < this.length; i++) {
+            if (Array.isArray(this[i])) {
+                let recurse = new Collect(this[i]);
+                if (count === stop) {
+                    result.push(this[i]);
+                    break
+                }
+                recurse.flatten(stop, result, count + 1)
+            } else (
+                result.push(this[i])
+            );
+        }
+        return result
+    }
+
+    include(value) {
+        for (let i = 0; i < this.length; i++) {
+            if (Array.isArray(value)) {
+                let collection = new Collect(value);
+                if (collection.eql(this[i])) return true;
+            }
+            if (value === this[i]) return true;
+        }
+
+        return false
+    }
+
+    index(value) {
+        if (value === undefined) return this;
+        for (let i = 0; i < this.length; i++) {
+            if (typeof value === 'function') {
+                if (value(this[i])) return i
+            } else {
+                if (value === this[i]) return i
+            }
+        }
+        return null;
     }
 
     // include(value){
@@ -249,7 +368,7 @@ class Collection extends Array {
     // }
 
     unshift(...indices) {
-        let temp = new Collection([...this]);
+        let temp =  Collection([...this]);
         this.clear();
         //indices.length = 1
         for (let j = 0; j < indices.length; j++) {
@@ -263,7 +382,7 @@ class Collection extends Array {
 
     values_at(...indices) {
         let values = [];
-        let result = new Collection([]);
+        let result =  Collection([]);
         for (let i = 0; i < indices.length; i++) {
             if (typeof indices[i] === 'number') {
                 values.push(indices[i])
@@ -286,9 +405,9 @@ class Collection extends Array {
     zip(...lists) {
         if (typeof (lists[0]) === 'function') return null;
 
-        let result = new Collection([]);
+        let result = Collection([]);
         for (let i = 0; i < this.length; i++) {
-            let c = new Collection([]);
+            let c = Collection([]);
             c.push(this[i]);
             for (let j = 0; j < lists.length; j++) {
                 c.push(lists[j][i]);
@@ -300,4 +419,6 @@ class Collection extends Array {
 }
 
 module.exports = Collection;
+
+
 

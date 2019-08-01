@@ -1,8 +1,10 @@
-let Collection = require('../ruby-sript/index');
+
+// let Collection = require('ruby-script');
+let Collection = require('../ruby-sript/index.js');
 
 describe('ruby-script', () => {
     it('should create a collection', () => {
-        let c = new Collection([1, 2, 3, 4]);
+        let c = Collection([1, 2, 3, 4]);
         expect(c.length).toBe(4);
         expect(c[0]).toBe(1);
         expect(c[1]).toBe(2);
@@ -12,20 +14,20 @@ describe('ruby-script', () => {
 
     describe('isCollection', () => {
         it('should return true', () => {
-            let c = new Collection([1, 2, 3, 4]);
+            let c = Collection([1, 2, 3, 4]);
             expect(c.isCollection()).toBe(true);
         })
     });
 
     describe('clear', () => {
         it('should removes all elements of this', () => {
-            let c = new Collection([1, 2, 3, 4]);
+            let c = Collection([1, 2, 3, 4]);
             c.clear();
             expect(c.length).toBe(0);
         });
 
         it('should return a collection', () => {
-            let c = new Collection([1, 2, 3, 4]);
+            let c = Collection([1, 2, 3, 4]);
             c.clear();
             expect(c.isCollection()).toBe(true)
         });
@@ -33,7 +35,7 @@ describe('ruby-script', () => {
 
     describe('collect', () => {
         it('should invoke the given function once for each element of collection', () => {
-            let c = new Collection([1, 2, 3, 4]);
+            let c = Collection([1, 2, 3, 4]);
             let collect = c.collect((n) => {
                 return n * 2
             });
@@ -47,13 +49,13 @@ describe('ruby-script', () => {
         });
 
         it('should return a collection', () => {
-            let c = new Collection([1, 2, 3, 4]);
+            let c = Collection([1, 2, 3, 4]);
 
             expect(c.isCollection()).toBe(true)
         });
 
-        it('should create a new collection with the result returned by the function', () => {
-            let c = new Collection([1, 2, 3, 4]);
+        it('should create a Collection with the result returned by the function', () => {
+            let c = Collection([1, 2, 3, 4]);
             let collect = c.collect((n) => {
                 return n * 2
             });
@@ -66,7 +68,7 @@ describe('ruby-script', () => {
         });
 
         it('should return the collection unaltered if no block is given', () => {
-            let c = new Collection([1, 2, 3, 4]);
+            let c = Collection([1, 2, 3, 4]);
             let collect = c.collect();
 
             expect(c.length).toBe(4);
@@ -79,9 +81,9 @@ describe('ruby-script', () => {
 
     describe('combination', () => {
         it('should all combinations for 1', () => {
-            let collection = new Collection([1, 2, 3, 4]);
+            let collection = Collection([1, 2, 3, 4]);
             combo = collection.combination(1);
-            result = new Collection([[1], [2], [3], [4]]);
+            result = Collection([[1], [2], [3], [4]]);
             combo.forEach((x, i) => {
                 expect(x[0]).toBe(result[i][0]);
                 expect(x.isCollection()).toBe(true)
@@ -90,9 +92,9 @@ describe('ruby-script', () => {
         });
 
         it('should all combinations for 2', () => {
-            let collection = new Collection([1, 2, 3, 4]);
+            let collection = Collection([1, 2, 3, 4]);
             combo = collection.combination(2);
-            result = new Collection([[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]]);
+            result = Collection([[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]]);
             combo.forEach((x, i) => {
                 expect(x[0]).toBe(result[i][0]);
                 expect(x[1]).toBe(result[i][1]);
@@ -102,9 +104,9 @@ describe('ruby-script', () => {
         });
 
         it('should all combinations for 3', () => {
-            let collection = new Collection([1, 2, 3, 4]);
+            let collection = Collection([1, 2, 3, 4]);
             combo = collection.combination(3);
-            result = new Collection([[1, 2, 3], [1, 2, 4], [1, 3, 4], [2, 3, 4]]);
+            result = Collection([[1, 2, 3], [1, 2, 4], [1, 3, 4], [2, 3, 4]]);
             combo.forEach((x, i) => {
                 expect(x[0]).toBe(result[i][0]);
                 expect(x[1]).toBe(result[i][1]);
@@ -115,9 +117,9 @@ describe('ruby-script', () => {
         });
 
         it('should all combinations for 4', () => {
-            let collection = new Collection([1, 2, 3, 4]);
+            let collection = Collection([1, 2, 3, 4]);
             combo = collection.combination(4);
-            result = new Collection([[1, 2, 3, 4]]);
+            result = Collection([[1, 2, 3, 4]]);
             combo.forEach((x, i) => {
                 expect(x[0]).toBe(result[i][0]);
                 expect(x[1]).toBe(result[i][1]);
@@ -129,9 +131,9 @@ describe('ruby-script', () => {
         });
 
         it('should 0 combinations for 0', () => {
-            let collection = new Collection([1, 2, 3, 4]);
+            let collection = Collection([1, 2, 3, 4]);
             combo = collection.combination(0);
-            result = new Collection([[]]);
+            result = Collection([[]]);
             combo.forEach((x, i) => {
                 expect(x[0]).toBe(result[i][0]);
                 expect(x.isCollection()).toBe(true)
@@ -140,7 +142,7 @@ describe('ruby-script', () => {
         });
 
         it('should empty collection for out of bounds values', () => {
-            let collection = new Collection([1, 2, 3, 4]);
+            let collection = Collection([1, 2, 3, 4]);
             combo = collection.combination(5);
             expect(combo.length).toBe(0);
             expect(combo.isCollection()).toBe(true)
@@ -151,7 +153,7 @@ describe('ruby-script', () => {
 
     describe('compact', () => {
         it('should all combinations for 5', () => {
-            let collection = new Collection([1, undefined, 2, null, 3]);
+            let collection = Collection([1, undefined, 2, null, 3]);
             let comp = collection.compact();
 
             expect(comp[0]).toBe(1);
@@ -164,7 +166,7 @@ describe('ruby-script', () => {
 
     describe('concat', () => {
         it('should append the elements of another array to this', () => {
-            let collection = new Collection([1, 2, 3]);
+            let collection = Collection([1, 2, 3]);
             collection.concat([4]);
 
             expect(collection.length).toBe(4);
@@ -172,7 +174,7 @@ describe('ruby-script', () => {
         });
 
         it('should append the elements of multiple arrays to this', () => {
-            let collection = new Collection([1, 2, 3]);
+            let collection = Collection([1, 2, 3]);
             let concat1 = [4];
             let concat2 = [5];
             collection.concat(concat1, concat2);
@@ -183,8 +185,8 @@ describe('ruby-script', () => {
         });
 
         it('should append the elements of another collection to this', () => {
-            let collection = new Collection([1, 2, 3]);
-            let concat = new Collection([4]);
+            let collection = Collection([1, 2, 3]);
+            let concat = Collection([4]);
             collection.concat(concat);
 
             expect(collection.length).toBe(4);
@@ -192,9 +194,9 @@ describe('ruby-script', () => {
         });
 
         it('should append the elements of multiple collections to this', () => {
-            let collection = new Collection([1, 2, 3]);
-            let concat1 = new Collection([4]);
-            let concat2 = new Collection([5]);
+            let collection = Collection([1, 2, 3]);
+            let concat1 = Collection([4]);
+            let concat2 = Collection([5]);
             collection.concat(concat1, concat2);
 
             expect(collection.length).toBe(5);
@@ -203,9 +205,9 @@ describe('ruby-script', () => {
         });
 
         it('should append the elements of multiple one array and one collection', () => {
-            let collection = new Collection([1, 2, 3]);
+            let collection = Collection([1, 2, 3]);
             let concat1 = [4];
-            let concat2 = new Collection([5]);
+            let concat2 = Collection([5]);
             collection.concat(concat1, concat2);
 
             expect(collection.length).toBe(5);
@@ -216,16 +218,16 @@ describe('ruby-script', () => {
 
     describe('count', () => {
         test('should return number of elements in collection', () => {
-            let collection = new Collection(["1", "1", 2, 3]);
+            let collection = Collection(["1", "1", 2, 3]);
             expect(collection.count()).toBe(4);
         });
 
         test('should return count of elements which equal the given parameter', () => {
-            let collection = new Collection(["1", "1", 2, [3], new Collection([4])]);
+            let collection = Collection(["1", "1", 2, [3], Collection([4])]);
             let param1 = '1';
             let param2 = 2;
             let param3 = [3];
-            let param4 = new Collection([4]);
+            let param4 = Collection([4]);
 
             expect(collection.count(param1)).toBe(2);
             expect(collection.count(param2)).toBe(1);
@@ -234,25 +236,25 @@ describe('ruby-script', () => {
         });
 
         test('should return count of elements for which the given block returns a true value', () => {
-            let collection = new Collection(["1", "1", 2, 3]);
+            let collection = Collection(["1", "1", 2, 3]);
             expect(collection.count((x) => {
                 return x % 2 === 0
             })).toEqual(1);
         });
 
         test('should return count of 0 when no elements match', () => {
-            let collection = new Collection(["1", "1", 2, 3]);
+            let collection = Collection(["1", "1", 2, 3]);
             expect(collection.count(1)).toEqual(0);
         });
 
         test('should return count of element with longer arrays', () => {
-            let collection = new Collection([new Collection([1, 2, 3]), [2, 3, 4, 5, 6]]);
+            let collection = Collection([Collection([1, 2, 3]), [2, 3, 4, 5, 6]]);
             // expect(collection.count([1,2,3])).toEqual(1);
             expect(collection.count([2, 3, 4, 5, 6, 7])).toEqual(0);
         });
 
         test('should return count of element with decimals', () => {
-            let collection = new Collection([1.1, 2]);
+            let collection = Collection([1.1, 2]);
             expect(collection.count(1.1)).toEqual(1);
             expect(collection.count(1)).toEqual(0);
             expect(collection.count(2)).toEqual(1);
@@ -261,7 +263,7 @@ describe('ruby-script', () => {
 
     describe('cycle', () => {
         test('should call block 2 times and return collection', () => {
-            let collection = new Collection([1, 2, 3]);
+            let collection = Collection([1, 2, 3]);
             let cy = collection.cycle(2, (x) => {
                 return x * 2
             });
@@ -276,7 +278,7 @@ describe('ruby-script', () => {
         });
 
         test('should return an extended collection with duplicates of original values', () => {
-            let collection = new Collection([1, 2, 3]);
+            let collection = Collection([1, 2, 3]);
             let cy = collection.cycle(2);
             expect(cy.length).toBe(6);
             expect(cy[0]).toBe(1);
@@ -289,7 +291,7 @@ describe('ruby-script', () => {
         });
 
         test('should return null if non-positive integer is passed', () => {
-            let collection = new Collection([1, 2, 3]);
+            let collection = Collection([1, 2, 3]);
             let cy = collection.cycle(-2, (x) => {
                 return x * 3
             });
@@ -297,7 +299,7 @@ describe('ruby-script', () => {
         });
 
         test('should return null if collection is empty', () => {
-            let collection = new Collection([]);
+            let collection = Collection([]);
             let cy = collection.cycle(-2, (x) => {
                 return x * 3
             });
@@ -307,7 +309,7 @@ describe('ruby-script', () => {
 
     describe('delete', () => {
         test('should delete all 2s from collection', () => {
-            let collection = new Collection([1, 2, 3, 4, 2]);
+            let collection = Collection([1, 2, 3, 4, 2]);
             collection.delete(2);
             expect(collection.length).toBe(3);
             expect(collection[0]).toBe(1);
@@ -316,13 +318,13 @@ describe('ruby-script', () => {
         });
 
         test('should delete all 2s from collection', () => {
-            let collection = new Collection([1, 2, 3, 4, 2]);
+            let collection = Collection([1, 2, 3, 4, 2]);
             let del = collection.delete(2);
             expect(del).toBe(2);
         });
 
         test('should delete all 2s from collection and not result of block', () => {
-            let collection = new Collection([1, 2, 3, 4, 2]);
+            let collection = Collection([1, 2, 3, 4, 2]);
             collection.delete(2, () => {
                 return 'not found'
             });
@@ -333,7 +335,7 @@ describe('ruby-script', () => {
         });
 
         test('should return result of block and not change collection', () => {
-            let collection = new Collection([1, 2, 3, 4, 2]);
+            let collection = Collection([1, 2, 3, 4, 2]);
             let del = collection.delete(5, () => {
                 return 'not found'
             });
@@ -349,22 +351,22 @@ describe('ruby-script', () => {
 
     describe('delete_at', () => {
         it('should return value at given index', () => {
-            let collection = new Collection([1, 2, 3, 4, 5]);
+            let collection = Collection([1, 2, 3, 4, 5]);
             let del = collection.delete_at(2);
 
             expect(del).toEqual(3);
         });
 
         it('should modify the original collection removing value at given index', () => {
-            let collection = new Collection([1, 2, 3, 4, 5]);
-            let result = new Collection([1, 2, 4, 5]);
+            let collection = Collection([1, 2, 3, 4, 5]);
+            let result = Collection([1, 2, 4, 5]);
             collection.delete_at(2);
 
             expect(collection).toEqual(result);
         });
 
         it('should return null if given index is out of range', () => {
-            let collection = new Collection([1, 2, 3, 4, 5]);
+            let collection = Collection([1, 2, 3, 4, 5]);
             let del = collection.delete_at(99);
 
             expect(del).toEqual(null)
@@ -373,8 +375,8 @@ describe('ruby-script', () => {
 
     describe('delete_if', () => {
         it('should delete every element for which block evaluates true', () => {
-            let collection = new Collection([1, 2, 3, 4, 5]);
-            let result = new Collection([1, 3, 5]);
+            let collection = Collection([1, 2, 3, 4, 5]);
+            let result = Collection([1, 3, 5]);
             collection.delete_if((x) => {
                 return x % 2 === 0
             });
@@ -387,8 +389,8 @@ describe('ruby-script', () => {
         });
 
         it('should return unaltered array if no block is provided', () => {
-            let collection = new Collection([1, 2, 3, 4, 5]);
-            let result = new Collection([1, 2, 3, 4, 5]);
+            let collection = Collection([1, 2, 3, 4, 5]);
+            let result = Collection([1, 2, 3, 4, 5]);
 
             collection.delete_if(() => {
                 return this.length === 1
@@ -400,7 +402,7 @@ describe('ruby-script', () => {
 
     describe('dig', () => {
         it('should return nested value given a set of ids', () => {
-            let collection = new Collection([1, [2, [3, [4, [5, [6, [7]]]]]]]);
+            let collection = Collection([1, [2, [3, [4, [5, [6, [7]]]]]]]);
             let dig1 = collection.dig(1);
             let dig2 = collection.dig(1, 1);
             let dig3 = collection.dig(1, 1, 1);
@@ -419,7 +421,7 @@ describe('ruby-script', () => {
         });
 
         it('should return null for no match', () => {
-            let collection = new Collection([1, [2, [3, [4, [5, [6, [7]]]]]]]);
+            let collection = Collection([1, [2, [3, [4, [5, [6, [7]]]]]]]);
 
             let dig1 = collection.dig(2);
             let dig2 = collection.dig(1, 2);
@@ -439,7 +441,7 @@ describe('ruby-script', () => {
         });
 
         it('should error if called on a non collection return value', () => {
-            let collection = new Collection([1, [2, [3, [4, [5, [6, [7]]]]]]]);
+            let collection = Collection([1, [2, [3, [4, [5, [6, [7]]]]]]]);
 
             expect(() => {
                 collection.dig(1, 0, 0)
@@ -449,21 +451,21 @@ describe('ruby-script', () => {
 
     describe('drop', () => {
         it('should drop the 3 elements from Collection', () => {
-            let collection = new Collection([1, 2, 3, 4, 5]);
+            let collection = Collection([1, 2, 3, 4, 5]);
             let drop = collection.drop(3);
 
-            expect(drop).toEqual(new Collection([4, 5]));
+            expect(drop).toEqual(Collection([4, 5]));
         });
 
         it('should return a collection', () => {
-            let collection = new Collection([1, 2, 3, 4, 5]);
+            let collection = Collection([1, 2, 3, 4, 5]);
             let drop = collection.drop(3);
 
             expect(drop.isCollection()).toEqual(true);
         });
 
         it('should throw argument error for negative number', () => {
-            let collection = new Collection([1, 2, 3, 4, 5]);
+            let collection = Collection([1, 2, 3, 4, 5]);
 
             expect(() => {
                 collection.drop(-1);
@@ -471,7 +473,7 @@ describe('ruby-script', () => {
         });
 
         it('should throw argument error for non number', () => {
-            let collection = new Collection([1, 2, 3, 4, 5]);
+            let collection = Collection([1, 2, 3, 4, 5]);
 
             expect(() => {
                 collection.drop('1');
@@ -481,26 +483,26 @@ describe('ruby-script', () => {
 
     describe('drop_while', () => {
         it('should drop each element until block returns false', () => {
-            let collection = new Collection([1, 2, 3, 4, 5]);
+            let collection = Collection([1, 2, 3, 4, 5]);
             let dropWhile = collection.drop_while((i) => {
                 return i < 3
             });
 
-            expect(dropWhile).toEqual(new Collection([4, 5]));
+            expect(dropWhile).toEqual(Collection([4, 5]));
         });
 
         it('should drop each element until block returns null', () => {
-            let collection = new Collection([1, 2, 3, 4, 5]);
-            let collection2 = new Collection([3, 4, 5]);
+            let collection = Collection([1, 2, 3, 4, 5]);
+            let collection2 = Collection([3, 4, 5]);
             let dropWhile = collection2.drop_while((i) => {
                 return collection[i] > i
             });
 
-            expect(dropWhile).toEqual(new Collection([5]));
+            expect(dropWhile).toEqual(Collection([5]));
         });
 
         it('should return a collection', () => {
-            let collection = new Collection([1, 2, 3, 4, 5]);
+            let collection = Collection([1, 2, 3, 4, 5]);
             let dropWhile = collection.drop_while((i) => {
                 return i < 3
             });
@@ -511,7 +513,7 @@ describe('ruby-script', () => {
 
     describe('each', () => {
         it('should loop through each element in collection', () => {
-            let collection = new Collection([1, 2, 3]);
+            let collection = Collection([1, 2, 3]);
             let result = 0;
             collection.each((i) => {
                 return result += i
@@ -521,7 +523,7 @@ describe('ruby-script', () => {
         });
 
         it('should return this', () => {
-            let collection = new Collection([1, 2, 3]);
+            let collection = Collection([1, 2, 3]);
             let each = collection.each((i) => {
                 return i
             });
@@ -530,7 +532,7 @@ describe('ruby-script', () => {
         });
 
         it('should return this if no function is passed as argument', () => {
-            let collection = new Collection([1, 2, 3]);
+            let collection = Collection([1, 2, 3]);
             let each = collection.each();
 
             expect(each).toBe(collection);
@@ -539,7 +541,7 @@ describe('ruby-script', () => {
 
     describe('each_index', () => {
         it('should loop through each element in collection passing in the index instead of element', () => {
-            let collection = new Collection([1, 2, 3]);
+            let collection = Collection([1, 2, 3]);
             let result = 0;
             collection.each_index((i) => {
                 return result += i
@@ -549,7 +551,7 @@ describe('ruby-script', () => {
         });
 
         it('should return this', () => {
-            let collection = new Collection([1, 2, 3]);
+            let collection = Collection([1, 2, 3]);
             let each = collection.each_index((i) => {
                 return i
             });
@@ -558,7 +560,7 @@ describe('ruby-script', () => {
         });
 
         it('should return this if no function is passed as argument', () => {
-            let collection = new Collection([1, 2, 3]);
+            let collection = Collection([1, 2, 3]);
             let each = collection.each_index();
 
             expect(each).toBe(collection);
@@ -567,7 +569,7 @@ describe('ruby-script', () => {
 
     describe('each_with_index', () => {
         it('should loop through each element in collection passing in the element and index', () => {
-            let collection = new Collection([1, 2, 3]);
+            let collection = Collection([1, 2, 3]);
             let result = 0;
             collection.each_with_index((x, i) => {
                 return result += (x + i)
@@ -577,7 +579,7 @@ describe('ruby-script', () => {
         });
 
         it('should return this', () => {
-            let collection = new Collection([1, 2, 3]);
+            let collection = Collection([1, 2, 3]);
             let each = collection.each_with_index((i) => {
                 return i
             });
@@ -586,7 +588,7 @@ describe('ruby-script', () => {
         });
 
         it('should return this if no function is passed as argument', () => {
-            let collection = new Collection([1, 2, 3]);
+            let collection = Collection([1, 2, 3]);
             let each = collection.each_with_index();
 
             expect(each).toBe(collection);
@@ -595,14 +597,14 @@ describe('ruby-script', () => {
 
     describe('empty', () => {
         it('should return true if collection has no elements', () => {
-            let collection = new Collection([]);
+            let collection = Collection([]);
             let empty = collection.empty();
 
             expect(empty).toBe(true);
         });
 
         it('should return false if collection HAS elements', () => {
-            let collection = new Collection([1]);
+            let collection = Collection([1]);
             let empty = collection.empty();
 
             expect(empty).toBe(false);
@@ -611,29 +613,29 @@ describe('ruby-script', () => {
 
     describe('eql', () => {
         it('should return true if collections have the same values', () => {
-            let collection = new Collection([1, 2, 3]);
-            let eql = collection.eql(new Collection([1, 2, 3]));
+            let collection = Collection([1, 2, 3]);
+            let eql = collection.eql(Collection([1, 2, 3]));
 
             expect(eql).toBe(true);
         });
 
         it('should return true if collection and array have the same values', () => {
-            let collection = new Collection([1, 2, 3]);
+            let collection = Collection([1, 2, 3]);
             let eql = collection.eql([1, 2, 3]);
 
             expect(eql).toBe(true);
         });
 
         it('should return false if collections are NOT the same object', () => {
-            let collection = new Collection([1, 2, 3]);
+            let collection = Collection([1, 2, 3]);
             let eql = collection.eql({});
 
             expect(eql).toBe(false);
         });
 
         it('should return false if collections do NOT have the same values', () => {
-            let collection = new Collection([1, 2, 3]);
-            let collection2 = new Collection([1, 2]);
+            let collection = Collection([1, 2, 3]);
+            let collection2 = Collection([1, 2]);
             let eql = collection.eql([1, 2]);
             let eql2 = collection2.eql([1, 2, 3]);
 
@@ -642,68 +644,371 @@ describe('ruby-script', () => {
         });
     });
 
-    describe('unshift', () => {
-        it('should prepends object to of this, moving other elements upwards', () => {
-            let collection = new Collection([2, 3, 4]);
-            expect(collection.unshift('a', 'b')).toEqual(['a', 'b', 2, 3, 4]);
+    describe('fetch', () => {
+        it('should return value at index provided', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            let fetch = collection.fetch(1);
+
+            expect(fetch).toEqual(2);
         });
 
-        it('should return this', () => {
-            let collection = new Collection([2, 3, 4]);
-            expect(collection.unshift(0, 1)).toBe(collection);
-        })
+        it('should return value at negative index provided', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            let fetch = collection.fetch(-1);
 
-    });
-
-    describe('values_at', () => {
-        it('should return a collection containing the elements of this to the given index(s)', () => {
-            let collection = new Collection(["a", "b", "c", "d", "e", "f"]);
-            let values_at = collection.values_at(1, 3, 5);
-            expect(values_at).toEqual(["b", "d", "f"]);
-            expect(values_at.isCollection()).toEqual(true);
+            expect(fetch).toEqual(4);
         });
 
-        it('should return undefined if index is out of range', () => {
-            let collection = new Collection(["a", "b", "c", "d", "e", "f"]);
-            let values_at = collection.values_at(1, 3, 5, 7);
-            expect(values_at).toEqual(["b", "d", "f", undefined]);
+        it('should return default value when provided index is out of bounds', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            let fetch = collection.fetch(4, 'cat');
+
+            expect(fetch).toEqual('cat');
         });
 
-        it('should return return a collection containing the elements of this to the given negative index(s)', () => {
-            let collection = new Collection(["a", "b", "c", "d", "e", "f"]);
-            let values_at = collection.values_at(-1, -2, -2, -7);
-            expect(values_at).toEqual(["f", "e", "e", undefined]);
+        it('should NOT return default value when provided index is NOT out of bounds', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            let fetch = collection.fetch(3, 'cat');
+
+            expect(fetch).toEqual(4);
         });
 
-        it('should return a collection containing the elements of the given range(s)', () => {
-            let collection = new Collection(["a", "b", "c", "d", "e", "f", "g"]);
-            let range = new Collection([5, 7]);
-            let values_at = collection.values_at(0, [1, 2], 4, range);
-            expect(values_at).toEqual(["a", "b", "c", "e", "f", "g", undefined]);
-
-        })
-    });
-
-    describe('zip', () => {
-        it('should convert any argument to Collections then merges elements of this with correcsponding elements of each argument.', () => {
-            let collection = new Collection([1, 2, 3, 4]);
-            let a = new Collection([4, 5, 6]);
-            let b = [7, 8, 9];
-            let zip = collection.zip(a, b);
-
-            expect(zip).toEqual([[1, 4, 7], [2, 5, 8], [3, 6, 9], [4, undefined, undefined]]);
-            expect(zip.isCollection()).toEqual(true);
-            expect(zip[0].isCollection()).toEqual(true);
-            expect(zip[1].isCollection()).toEqual(true);
-            expect(zip[2].isCollection()).toEqual(true);
-            expect(zip[3].isCollection()).toEqual(true);
-        });
-        it('should return null if function is passed as an argument', () => {
-            let collection = new Collection([1, 2, 3, 4]);
-            let zip = collection.zip(() => {
-                return this.pop
+        it('should call callback when provided index is out of bounds', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            let fetch = '';
+            collection.fetch(100, (i) => {
+                fetch = `${i} is out of bounds`
             });
-            expect(zip).toBe(null);
+
+            expect(fetch).toEqual('100 is out of bounds');
+        });
+
+        it('should NOT call callback when provided index is NOT out of bounds', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            let fetch = '';
+            collection.fetch(3, (i) => {
+                fetch = `${i} is out of bounds`
+            });
+
+            expect(fetch).toEqual('');
+        });
+    });
+
+    describe('fill', () => {
+        it('should fill the existing collection with new values', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            let expected = Collection(['x', 'x', 'x', 'x']);
+            collection.fill('x');
+
+            expect(collection).toEqual(expected);
+        });
+
+        it('should fill the existing collection with new values starting at the given index position', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            let expected = Collection([1, 2, 'x', 'x']);
+            collection.fill('x', 2);
+
+            expect(collection).toEqual(expected);
+        });
+
+        it('should fill the existing collection with new values starting at the given negatove index position', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            let expected = Collection([1, 'x', 'x', 'x']);
+            collection.fill('x', -3);
+
+            expect(collection).toEqual(expected);
+        });
+
+        it('should fill the existing collection with new values starting at the given index position and up to the given length', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            let expected = Collection([1, 'x', 'x', 4]);
+            collection.fill('x', 1, 2);
+
+            expect(collection).toEqual(expected);
+        });
+
+        it('should fill the existing collection with new values using the given start/end range', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            let expected = Collection(['x', 'x', 'x', 4]);
+            collection.fill('x', [0, 2]);
+
+            expect(collection).toEqual(expected);
+        });
+
+        it('should fill the existing collection with the resulting values of the provided callback function', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            let expected = Collection([0, 1, 4, 9]);
+            collection.fill((i) => {
+                return i * i
+            });
+
+            expect(collection).toEqual(expected);
+        });
+
+        it('should fill the existing collection with the resulting values of the provided callback function', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            let expected = Collection([1, 2, 'x2', 'x3']);
+            collection.fill(-2, (i) => {
+                return `x${i}`
+            });
+
+            expect(collection).toEqual(expected);
+        });
+
+        it('should do nothing if finish value is negative', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            let expected = Collection([1, 2, 3, 4]);
+            collection.fill('x', 1, -1);
+
+            expect(collection).toEqual(expected);
+        });
+
+        it('should do nothing if finish value in range is negative', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            let expected = Collection([1, 2, 3, 4]);
+            collection.fill('x', [1, -1]);
+
+            expect(collection).toEqual(expected);
         })
+    });
+
+    describe('find_index', () => {
+        it('should return index for element matching the provided value', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            let find_index = collection.find_index(2);
+
+            expect(find_index).toEqual(1);
+        });
+
+        it('should return null the index when no element matches the provided value', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            let find_index = collection.find_index(5);
+
+            expect(find_index).toEqual(null);
+        });
+
+        it('should return index for the first element for which the block returns true', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            let find_index = collection.find_index((e) => {
+                return e === 3
+            });
+
+            expect(find_index).toEqual(2);
+        });
+
+        it('should return this if no arguments are provided', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            let find_index = collection.find_index();
+
+            expect(find_index).toEqual(collection);
+        });
+    });
+
+    describe('first', () => {
+        it('should return first element in collection', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            let first = collection.first();
+
+            expect(first).toEqual(1);
+        });
+
+        it('should return the first n elements of collection as a Collection', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            let first = collection.first(2);
+
+            expect(first).toEqual([1, 2]);
+            expect(first.isCollection()).toBe(true)
+        });
+
+        it('should return undefined if collection is empty', () => {
+            let collection = Collection([]);
+            let first = collection.first();
+
+            expect(first).toEqual(undefined);
+        });
+
+        it('should return empty collection if collection is empty and an argument is provided', () => {
+            let collection = Collection([]);
+            let first = collection.first(2);
+
+            expect(first).toEqual([]);
+            expect(first.isCollection()).toBe(true)
+        });
+    });
+
+    describe('flatten', () => {
+        it('should flatten as a single dimensional collection', () => {
+            let collection = Collection([1, [2, 3, 4], [5, [6]]]);
+            let flatten = collection.flatten();
+
+            expect(flatten).toEqual([1, 2, 3, 4, 5, 6]);
+        });
+
+        it('should return a collection', () => {
+            let collection = Collection([1, [2, 3, 4], [5, [6]]]);
+            let flatten = collection.flatten();
+
+            expect(flatten.isCollection()).toBe(true);
+        });
+
+        it('should flattened only one dimension deep when 1 is provided', () => {
+            let collection = Collection([1, [2, 3, [4]], [5, [6]]]);
+            let result = Collection([1, 2, 3, [4], 5, [6]]);
+            let flatten = collection.flatten(1);
+
+            expect(flatten).toEqual(result);
+        });
+
+        it('should flattened only two dimensions deep when 2 is provided', () => {
+            let collection = Collection([1, [2, 3, 4], [5, [6, [7]]]]);
+            let result = Collection([1, 2, 3, 4, 5, 6, [7]]);
+            let flatten = collection.flatten(2);
+
+            expect(flatten).toEqual(result);
+        });
+
+        it('should flatten completely if argument greater than depth is provided', () => {
+            let collection = Collection([1, [2, 3, 4], [5, [6]]]);
+            let flatten = collection.flatten();
+
+            expect(flatten).toEqual([1, 2, 3, 4, 5, 6]);
+        });
+
+        it('should flatten a mixture of arrays and collections', () => {
+            let collection = Collection([1, [2, 3, 4], [5, [6]]]);
+            let collection2 = Collection([[7, 8]]);
+            collection.push(collection2);
+            let flatten = collection.flatten();
+
+            expect(flatten).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
+        });
+    });
+
+    describe('include', () => {
+        it('should return true for number included in collection', () => {
+            let collection = Collection([1, '2', Collection([3]), [4]]);
+
+            expect(collection.include(1)).toBe(true);
+        });
+
+        it('should return true for string included in collection', () => {
+            let collection = Collection([1, '2', Collection([3]), [4]]);
+
+            expect(collection.include('2')).toBe(true);
+        });
+
+        it('should return true for collection included in collection', () => {
+            let collection = Collection([1, '2', Collection([3]), [4]]);
+
+            expect(collection.include(Collection([3]))).toBe(true);
+        });
+
+        it('should return true for array included in collection', () => {
+            let collection = Collection([1, '2', Collection([3]), [4]]);
+
+            expect(collection.include([4])).toBe(true);
+        });
+
+        it('should return false for value NOT included in collection', () => {
+            let collection = Collection([1, 2, 3, 4]);
+
+            expect(collection.include(5)).toBe(false);
+        })
+    });
+
+    describe('index', () => {
+        it('should return the index for the matching value', () => {
+            expect(Collection([1, 2, 3, 4]).index(4)).toBe(3);
+        });
+
+        it('should return the index of the FIRST occurance of the matching value', () => {
+            expect(Collection([4, 2, 3, 4]).index(4)).toBe(0);
+        });
+
+        it('should return null if no element matches value', () => {
+            expect(Collection([1, 2, 3, 4]).index(5)).toBe(null);
+        });
+
+        it('should return the index for the first value that returns true from function', () => {
+            expect(Collection([1, 2, 3, 4]).index((element) => {
+                return element * 2 === 4
+            })).toBe(1);
+        });
+
+        it('should return the FIRST occurance for the value that returns true from function', () => {
+            expect(Collection([2, 2, 3, 4]).index((element) => {
+                return element * 2 === 4
+            })).toBe(0);
+        });
+
+        it('should return this if arguments are passed', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            expect(collection.index()).toBe(collection);
+        });
+
+        describe('unshift', () => {
+            it('should prepends object to of this, moving other elements upwards', () => {
+                let collection =  Collection([2, 3, 4]);
+                expect(collection.unshift('a', 'b')).toEqual(['a', 'b', 2, 3, 4]);
+            });
+
+            it('should return this', () => {
+                let collection =  Collection([2, 3, 4]);
+                expect(collection.unshift(0, 1)).toBe(collection);
+            })
+
+        });
+    });
+
+        describe('values_at', () => {
+            it('should return a collection containing the elements of this to the given index(s)', () => {
+                let collection = Collection(["a", "b", "c", "d", "e", "f"]);
+                let values_at = collection.values_at(1, 3, 5);
+                expect(values_at).toEqual(["b", "d", "f"]);
+                expect(values_at.isCollection()).toEqual(true);
+            });
+
+            it('should return undefined if index is out of range', () => {
+                let collection = Collection(["a", "b", "c", "d", "e", "f"]);
+                let values_at = collection.values_at(1, 3, 5, 7);
+                expect(values_at).toEqual(["b", "d", "f", undefined]);
+            });
+
+            it('should return return a collection containing the elements of this to the given negative index(s)', () => {
+                let collection = Collection(["a", "b", "c", "d", "e", "f"]);
+                let values_at = collection.values_at(-1, -2, -2, -7);
+                expect(values_at).toEqual(["f", "e", "e", undefined]);
+            });
+
+            it('should return a collection containing the elements of the given range(s)', () => {
+                let collection = Collection(["a", "b", "c", "d", "e", "f", "g"]);
+                let range = Collection([5, 7]);
+                let values_at = collection.values_at(0, [1, 2], 4, range);
+                expect(values_at).toEqual(["a", "b", "c", "e", "f", "g", undefined]);
+
+            })
+        });
+
+        describe('zip', () => {
+            it('should convert any argument to Collections then merges elements of this with correcsponding elements of each argument.', () => {
+                let collection = Collection([1, 2, 3, 4]);
+                let a = Collection([4, 5, 6]);
+                let b = [7, 8, 9];
+                let zip = collection.zip(a, b);
+
+                expect(zip).toEqual([[1, 4, 7], [2, 5, 8], [3, 6, 9], [4, undefined, undefined]]);
+                expect(zip.isCollection()).toEqual(true);
+                expect(zip[0].isCollection()).toEqual(true);
+                expect(zip[1].isCollection()).toEqual(true);
+                expect(zip[2].isCollection()).toEqual(true);
+                expect(zip[3].isCollection()).toEqual(true);
+            });
+            it('should return null if function is passed as an argument', () => {
+                let collection = Collection([1, 2, 3, 4]);
+                let zip = collection.zip(() => {
+                    return this.pop
+                });
+                expect(zip).toBe(null);
+            })
     })
 });
