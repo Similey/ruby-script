@@ -909,9 +909,40 @@ describe('ruby-script', () => {
         });
 
         it('should return false for value NOT included in collection', () => {
-            let collection = Collection([1,2,3,4]);
+            let collection = Collection([1, 2, 3, 4]);
 
             expect(collection.include(5)).toBe(false);
         })
+    });
+
+    describe('index', () => {
+        it('should return the index for the matching value', () => {
+            expect(Collection([1, 2, 3, 4]).index(4)).toBe(3);
+        });
+
+        it('should return the index of the FIRST occurance of the matching value', () => {
+            expect(Collection([4, 2, 3, 4]).index(4)).toBe(0);
+        });
+
+        it('should return null if no element matches value', () => {
+            expect(Collection([1, 2, 3, 4]).index(5)).toBe(null);
+        });
+
+        it('should return the index for the first value that returns true from function', () => {
+            expect(Collection([1, 2, 3, 4]).index((element) => {
+                return element * 2 === 4
+            })).toBe(1);
+        });
+
+        it('should return the FIRST occurance for the value that returns true from function', () => {
+            expect(Collection([2, 2, 3, 4]).index((element) => {
+                return element * 2 === 4
+            })).toBe(0);
+        });
+
+        it('should return this if arguments are passed', () => {
+            let collection = Collection([1, 2, 3, 4]);
+            expect(collection.index()).toBe(collection);
+        });
     })
 });

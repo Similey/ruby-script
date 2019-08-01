@@ -482,3 +482,26 @@ collection.include(5);
 collection.include([5])
 //=> true
 ```
+
+### index
+Returns the _index_ of the first element in _collection_ such that the element is _===_ to the supplied value.
+
+If a _function_ is given instead of an argument, returns the _index_ of the first object for which the block returns _true_.
+Returns _null_ if no match is found.
+
+See also .rindex
+
+_this_ is returned if neither a block nor argument is given.
+
+```js
+collection = Collection([1,2,3,4]);
+
+collection.index(4);
+//=> 3
+
+collection.index(5);
+//=> null
+
+collection.index((element) => { return element * 2 === 4})
+//=> 1
+```

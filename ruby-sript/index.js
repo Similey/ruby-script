@@ -354,6 +354,18 @@ class Collect extends Array {
 
         return false
     }
+
+    index(value) {
+        if (value === undefined) return this;
+        for (let i = 0; i < this.length; i++) {
+            if (typeof value === 'function') {
+                if (value(this[i])) return i
+            } else {
+                if (value === this[i]) return i
+            }
+        }
+        return null;
+    }
 }
 
 module.exports = Collection;
