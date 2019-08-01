@@ -1,6 +1,10 @@
 // import * as helpers from './helpers'
 
-class Collection extends Array {
+const Collection = (array) => {
+    return new Collect(array);
+};
+
+class Collect extends Array {
     constructor(array) {
         // call the constructor of the Array class
         super(array.length);
@@ -31,7 +35,7 @@ class Collection extends Array {
     }
 
     combination(int) {
-        let allArray = new Collection([]);
+        let allArray = new Collect([]);
 
         let combos = (array, iterations, pushBack, startIndex = 0, exitIndex = iterations) => {
             // pushBack stack
@@ -46,13 +50,13 @@ class Collection extends Array {
             }
         };
 
-        let pushBack = new Collection([]);
+        let pushBack = new Collect([]);
         combos(this, int, pushBack);
         return allArray
     }
 
     compact() {
-        let compactArray = new Collection([]);
+        let compactArray = new Collect([]);
         for (let i = 0; i < this.length; i++) {
             if (this[i] !== null && this[i] !== undefined) {
                 compactArray.push(this[i])
@@ -109,7 +113,7 @@ class Collection extends Array {
 
     cycle(int, callback = null) {
         if (int < 0 || this.length === 0) return null;
-        let result = new Collection([]);
+        let result = new Collect([]);
         for (let i = 0; i < int; i++) {
             for (let j = 0; j < this.length; j++) {
                 if (callback === null) {
@@ -172,7 +176,7 @@ class Collection extends Array {
 
         try {
             // create a new collection that has been dug out of 'this'
-            let collection = new Collection(digValue);
+            let collection = new Collect(digValue);
 
             return collection.dig(...indexes);
         } catch (err) {
@@ -315,7 +319,7 @@ class Collection extends Array {
         if (value === null) {
             return this[0];
         } else {
-            let result = new Collection([]);
+            let result = new Collect([]);
             for (let i = 0; i < value; i++) {
                 result.push(this[i])
             }
@@ -323,10 +327,10 @@ class Collection extends Array {
         }
     }
 
-    flatten(stop = -1, result = new Collection([]), count = 0) {
+    flatten(stop = -1, result = new Collect([]), count = 0) {
         for (let i = 0; i < this.length; i++) {
             if (Array.isArray(this[i])) {
-                let recurse = new Collection(this[i]);
+                let recurse = new Collect(this[i]);
                 if (count === stop) {
                     result.push(this[i]);
                     break
@@ -342,7 +346,7 @@ class Collection extends Array {
     include(value) {
         for (let i = 0; i < this.length; i++) {
             if (Array.isArray(value)) {
-                let collection = new Collection(value);
+                let collection = new Collect(value);
                 if (collection.eql(this[i])) return true;
             }
             if (value === this[i]) return true;
