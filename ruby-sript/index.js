@@ -323,7 +323,7 @@ class Collection extends Array {
         }
     }
 
-    flatten(stop = -1, result = new Collection([]), count=0) {
+    flatten(stop = -1, result = new Collection([]), count = 0) {
         for (let i = 0; i < this.length; i++) {
             if (Array.isArray(this[i])) {
                 let recurse = new Collection(this[i]);
@@ -337,6 +337,18 @@ class Collection extends Array {
             );
         }
         return result
+    }
+
+    include(value) {
+        for (let i = 0; i < this.length; i++) {
+            if (Array.isArray(value)) {
+                let collection = new Collection(value);
+                if (collection.eql(this[i])) return true;
+            }
+            if (value === this[i]) return true;
+        }
+
+        return false
     }
 }
 

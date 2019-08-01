@@ -1,5 +1,5 @@
 // let Collection = require('ruby-script');
-let Collection = require('C:/Users/blewittj/WebstormProjects/ruby-script/ruby-sript/index.js');
+let Collection = require('../ruby-sript/index.js');
 
 describe('ruby-script', () => {
     it('should create a collection', () => {
@@ -875,11 +875,43 @@ describe('ruby-script', () => {
 
         it('should flatten a mixture of arrays and collections', () => {
             let collection = new Collection([1, [2, 3, 4], [5, [6]]]);
-            let collection2 = new Collection([[7,8]]);
+            let collection2 = new Collection([[7, 8]]);
             collection.push(collection2);
             let flatten = collection.flatten();
 
-            expect(flatten).toEqual([1, 2, 3, 4, 5, 6,7,8]);
+            expect(flatten).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
         });
+    });
+
+    describe('include', () => {
+        it('should return true for number included in collection', () => {
+            let collection = new Collection([1, '2', new Collection([3]), [4]]);
+
+            expect(collection.include(1)).toBe(true);
+        });
+
+        it('should return true for string included in collection', () => {
+            let collection = new Collection([1, '2', new Collection([3]), [4]]);
+
+            expect(collection.include('2')).toBe(true);
+        });
+
+        it('should return true for collection included in collection', () => {
+            let collection = new Collection([1, '2', new Collection([3]), [4]]);
+
+            expect(collection.include(new Collection([3]))).toBe(true);
+        });
+
+        it('should return true for array included in collection', () => {
+            let collection = new Collection([1, '2', new Collection([3]), [4]]);
+
+            expect(collection.include([4])).toBe(true);
+        });
+
+        it('should return false for value NOT included in collection', () => {
+            let collection = new Collection([1,2,3,4]);
+
+            expect(collection.include(5)).toBe(false);
+        })
     })
 });

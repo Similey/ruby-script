@@ -463,3 +463,20 @@ collection.flatten();
 collection.flatten(1);
 //=> [1,2,3,4,5,[6]]
 ```
+
+### include
+Returns _true_ if the given _value_ is present in _this_ (that is, if any element _===_ value)
+otherwise return _false_.
+
+```js
+collection = new Collection([1,2,3,4,[5]]);
+
+collection.include(4);
+//=> true
+
+collection.include(5);
+//=> false
+
+collection.include([5])
+//=> true
+```
