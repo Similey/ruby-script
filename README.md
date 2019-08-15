@@ -506,6 +506,28 @@ collection.index(5);
 collection.index((element) => { return element * 2 === 4})
 //=> 1
 ```
+
+###uniq
+Returns a new _array_ by removing duplicate values in _this_.
+
+If a _function_ is given, it will use the return value of the _function_ for comparison.
+
+_this_ is traversed in order, and the first occurrence is kept.
+ 
+```js
+collection = Collection([1,2,1,3,1]);
+collection.uniq();
+//=>[1,2,3]
+
+collection = Collection([1,2],[3,4],[1,2]);
+collection.uniq();
+//=>[[1,2],[3,4]]
+
+collection = Collection([1,2],[3,4],[1,3]);
+collection.uniq((a)=> {return a.first});
+//=>[1,2],[3,4]
+```
+
 ### unshift
 Prepends object to the front of _this_, moving other elements upwards.
 ```js

@@ -506,10 +506,32 @@ collection.index(5);
 collection.index((element) => { return element * 2 === 4})
 //=> 1
 ```
+
+###uniq
+Returns a new _array_ by removing duplicate values in _this_.
+
+If a _function_ is given, it will use the return value of the _function_ for comparison.
+
+_this_ is traversed in order, and the first occurrence is kept.
+ 
+```js
+collection = Collection([1,2,1,3,1]);
+collection.uniq();
+//=>[1,2,3]
+
+collection = Collection([1,2],[3,4],[1,2]);
+collection.uniq();
+//=>[[1,2],[3,4]]
+
+collection = Collection([1,2],[3,4],[1,3]);
+collection.unique((a)=> {return a.first});
+//=>[1,2],[3,4]
+```
+
 ### unshift
 Prepends object to the front of _this_, moving other elements upwards.
 ```js
-collection = new Collection([1,2,3]);
+collection =  Collection([1,2,3]);
 collection.unshift(0);
 //=> [0,1,2,3]
 
@@ -522,7 +544,7 @@ collection.unshift('a','b')
 Returns a _collection_ containing the elements of _this_ to the given index(s)
 
 ````js
-collection = new Collection(["a","b","c","d","e","f"]);
+collection =  Collection(["a","b","c","d","e","f"]);
 
 collection.values_at(1,3,5);
 
@@ -553,8 +575,8 @@ If the _length_ of any argument is less than the _length_ of the initial _collec
 Will return null if _function_ is passed as an argument.
 
 ```js
-collection = new Collection([1,2,3,4]);
-a = new Collection(4,5,6);
+collection =  Collection([1,2,3,4]);
+a =  Collection(4,5,6);
 b = [7,8,9];
 
 collection.zip(a,b);
@@ -563,3 +585,4 @@ collection.zip(a,b);
 collection.zip((a) => {a.pop()}, a,b)
 //=> null
 ```
+

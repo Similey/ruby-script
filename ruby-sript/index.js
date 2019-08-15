@@ -367,8 +367,33 @@ class Collect extends Array {
     //     }
     // }
 
+    uniq(callback = undefined) {
+
+
+        const delete_dup = (i, j, result) => {
+            while (j < result.length) {
+                if (result[i]===(result[j])) {
+                    result.delete_at(j);
+                }
+                j++;
+            }
+        };
+
+        let result = Collection([...this]);
+        for (let i = 0; i < result.length; i++) {
+            let j = i + 1;
+            if (typeof result[i] === 'number') {
+                delete_dup(i, j, result)
+            }else if(Array.isArray(result[i])){
+                delete_dup(i, j, result)
+            }
+        }
+        return result;
+    }
+
+
     unshift(...indices) {
-        let temp =  Collection([...this]);
+        let temp = Collection([...this]);
         this.clear();
         //indices.length = 1
         for (let j = 0; j < indices.length; j++) {
@@ -382,7 +407,7 @@ class Collect extends Array {
 
     values_at(...indices) {
         let values = [];
-        let result =  Collection([]);
+        let result = Collection([]);
         for (let i = 0; i < indices.length; i++) {
             if (typeof indices[i] === 'number') {
                 values.push(indices[i])

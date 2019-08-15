@@ -960,6 +960,26 @@ describe('ruby-script', () => {
         });
     });
 
+    describe('uniq', ()=>{
+        it('should return new array by removing the duplicate values of this', () => {
+          let collection = Collection([1,2,1,3,1]);
+          let uniq = collection.uniq();
+          expect(uniq).toEqual([1,2,3]);
+        });
+        it('should return value of function if function is given',() => {
+            let collection = Collection([[1,2],[3,4],[1,2]]);
+            let uniq = collection.uniq();
+            expect(uniq).toEqual([[1,2],[3,4]]);
+        });
+
+        it('should kept the first occurrence, if this is traversed in order', () =>{
+           let collection = Collection([[1,2],[3,4],[1,3]]);
+           let uniq = collection.unique((a)=> {return a.first});
+           expect(uniq).toEqual([[1,2],[3,4]]);
+        });
+
+    });
+
         describe('values_at', () => {
             it('should return a collection containing the elements of this to the given index(s)', () => {
                 let collection = Collection(["a", "b", "c", "d", "e", "f"]);
